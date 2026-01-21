@@ -80,7 +80,8 @@ function Home() {
               textAlign: "left",
             }}
           >
-            "Desconhecer as Escrituras é desconhecer o próprio Cristo."
+            &quot;Desconhecer as Escrituras é desconhecer o próprio
+            Cristo.&quot;
             <br />
             <strong style={{ color: "#2D2E30" }}>
               — São Jerônimo, Doutor da Igreja
