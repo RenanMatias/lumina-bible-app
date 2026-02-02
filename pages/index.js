@@ -149,60 +149,8 @@ function Home() {
               textAlign: "center",
             }}
           >
-            <p
-              style={{
-                fontSize: "1.1em",
-                color: "#2D2E30",
-                marginBottom: 10,
-                fontFamily: "Georgia, serif",
-              }}
-            >
-              Quer acompanhar a edificação deste projeto?
-            </p>
-
-            <p
-              style={{
-                margin: "0 0 20px 0",
-                color: "#7F8C8D",
-                fontSize: "0.95em",
-              }}
-            >
-              Siga o progresso e as atualizações em nosso repositório oficial:
-            </p>
-
-            <a
-              href="https://github.com/RenanMatias/lumina-bible-app"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "10px",
-                backgroundColor: "#C5A059",
-                color: "white",
-                padding: "12px 25px",
-                borderRadius: "30px",
-                textDecoration: "none",
-                fontWeight: "bold",
-                fontSize: "0.9em",
-                boxShadow: "0 4px 10px rgba(197, 160, 89, 0.2)",
-                transition: "transform 0.2s, background-color 0.2s",
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = "#B48F4D";
-                e.currentTarget.style.transform = "translateY(-2px)";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = "#C5A059";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              <span>📂</span> Ver no GitHub: lumina-bible-app
-            </a>
-
             <div
               style={{
-                marginTop: 40,
                 opacity: 0.5,
                 fontSize: "0.8em",
                 color: "#2D2E30",
