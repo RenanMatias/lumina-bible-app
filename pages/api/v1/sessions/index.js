@@ -5,7 +5,8 @@ import session from "models/session.js";
 
 const router = createRouter();
 
-router.post(postHandler);
+router.use(controller.injectAnonymousOrUser);
+router.post(controller.canRequest("create:session"), postHandler);
 router.delete(deleteHandler);
 
 export default router.handler(controller.errorHandlers);
@@ -22,10 +23,6 @@ async function postHandler(request, response) {
 
   controller.setSessionCookie(newSession.token, response);
 
-  response.setHeader(
-    "Cache-Control",
-    "no-store, no-cache, max-age=0, must-revalidate",
-  );
   return response.status(201).json(newSession);
 }
 
