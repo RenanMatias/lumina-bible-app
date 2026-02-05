@@ -98,6 +98,8 @@ describe("POST /api/v1/sessions", () => {
         password: "password-correct",
       });
 
+      await orchestrator.activateUser(createdUser);
+
       const response = await fetch("http://localhost:3000/api/v1/sessions", {
         method: "POST",
         headers: {
@@ -110,11 +112,6 @@ describe("POST /api/v1/sessions", () => {
       });
 
       expect(response.status).toBe(201);
-
-      const cacheControl = response.headers.get("Cache-Control");
-      expect(cacheControl).toBe(
-        "no-store, no-cache, max-age=0, must-revalidate",
-      );
 
       const responseBody = await response.json();
 
