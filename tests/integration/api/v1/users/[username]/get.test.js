@@ -12,8 +12,6 @@ describe("GET /api/v1/users/[username]", () => {
     test("With exact case match", async () => {
       await orchestrator.createUser({
         username: "SameCase",
-        email: "same_case@email.com",
-        password: "secure_password",
       });
 
       const response2 = await fetch(
@@ -27,9 +25,7 @@ describe("GET /api/v1/users/[username]", () => {
       expect(response2Body).toEqual({
         id: response2Body.id,
         username: "SameCase",
-        email: "same_case@email.com",
         features: ["read:activation_token"],
-        password: response2Body.password,
         created_at: response2Body.created_at,
         updated_at: response2Body.updated_at,
       });
@@ -42,8 +38,6 @@ describe("GET /api/v1/users/[username]", () => {
     test("With case mismatch", async () => {
       await orchestrator.createUser({
         username: "DifferentCase",
-        email: "different_case@email.com",
-        password: "secure_password",
       });
 
       const response2 = await fetch(
@@ -57,9 +51,7 @@ describe("GET /api/v1/users/[username]", () => {
       expect(response2Body).toEqual({
         id: response2Body.id,
         username: "DifferentCase",
-        email: "different_case@email.com",
         features: ["read:activation_token"],
-        password: response2Body.password,
         created_at: response2Body.created_at,
         updated_at: response2Body.updated_at,
       });
