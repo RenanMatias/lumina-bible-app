@@ -90,11 +90,7 @@ describe("models/authorization.js", () => {
         password: "resource",
       };
 
-      const result = authorization.filterOutput(
-        createdUser,
-        "read:user",
-        resouse,
-      );
+      const result = authorization.filterOutput(createdUser, "read:user", resouse);
 
       expect(result).toEqual({
         id: 1,

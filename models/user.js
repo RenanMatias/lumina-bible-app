@@ -114,12 +114,7 @@ async function create(userInputValues) {
       RETURNING
         *
       ;`,
-      values: [
-        userInputValues.username,
-        userInputValues.email,
-        userInputValues.password,
-        userInputValues.features,
-      ],
+      values: [userInputValues.username, userInputValues.email, userInputValues.password, userInputValues.features],
     });
 
     return results.rows[0];
@@ -165,12 +160,7 @@ async function update(username, userInputValues) {
       RETURNING
         *
       ;`,
-      values: [
-        userWithNewValues.id,
-        userWithNewValues.username,
-        userWithNewValues.email,
-        userWithNewValues.password,
-      ],
+      values: [userWithNewValues.id, userWithNewValues.username, userWithNewValues.email, userWithNewValues.password],
     });
 
     return results.rows[0];

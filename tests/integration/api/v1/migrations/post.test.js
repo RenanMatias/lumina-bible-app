@@ -18,8 +18,7 @@ describe("POST /api/v1/migrations", () => {
       const responseBody = await response.json();
 
       expect(responseBody).toEqual({
-        action:
-          'Verifique se o seu usuário possui a feature "create:migration"',
+        action: 'Verifique se o seu usuário possui a feature "create:migration"',
         message: "Você não possui permissão para executar essa ação.",
         name: "ForbiddenError",
         status_code: 403,
@@ -45,8 +44,7 @@ describe("POST /api/v1/migrations", () => {
       const responseBody = await response.json();
 
       expect(responseBody).toEqual({
-        action:
-          'Verifique se o seu usuário possui a feature "create:migration"',
+        action: 'Verifique se o seu usuário possui a feature "create:migration"',
         message: "Você não possui permissão para executar essa ação.",
         name: "ForbiddenError",
         status_code: 403,

@@ -119,8 +119,7 @@ function filterOutput(user, feature, resource) {
     };
 
     if (can(user, "read:status:all")) {
-      output.dependencies.database.version =
-        resource.dependencies.database.version;
+      output.dependencies.database.version = resource.dependencies.database.version;
     }
 
     return output;

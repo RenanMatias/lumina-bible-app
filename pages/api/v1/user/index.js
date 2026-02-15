@@ -21,16 +21,9 @@ async function getHandler(request, response) {
 
   const userFound = await user.findOneById(sessionObject.user_id);
 
-  response.setHeader(
-    "Cache-Control",
-    "no-store, no-cache, max-age=0, must-revalidate",
-  );
+  response.setHeader("Cache-Control", "no-store, no-cache, max-age=0, must-revalidate");
 
-  const secureOutputValues = authorization.filterOutput(
-    userTryingToGet,
-    "read:user:self",
-    userFound,
-  );
+  const secureOutputValues = authorization.filterOutput(userTryingToGet, "read:user:self", userFound);
 
   return response.status(200).json(secureOutputValues);
 }

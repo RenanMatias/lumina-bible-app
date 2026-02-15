@@ -31,8 +31,7 @@ async function findOneValidById(tokenId) {
 
     if (results.rowCount === 0) {
       throw new NotFoundError({
-        message:
-          "O token de ativação utilizado não foi encontrado no sistema ou expirou.",
+        message: "O token de ativação utilizado não foi encontrado no sistema ou expirou.",
         action: "Faça um novo cadastro.",
       });
     }
@@ -75,11 +74,7 @@ async function activateUserByUserId(userId) {
     });
   }
 
-  const activatedUser = await user.setFeatures(userId, [
-    "create:session",
-    "read:session",
-    "update:user",
-  ]);
+  const activatedUser = await user.setFeatures(userId, ["create:session", "read:session", "update:user"]);
   return activatedUser;
 }
 

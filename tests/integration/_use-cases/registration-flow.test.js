@@ -16,20 +16,17 @@ describe("Use case: Registration Flow (all seccessful)", () => {
   let createSessionResponseBody;
 
   test("Create user account", async () => {
-    const createUserResponse = await fetch(
-      "http://localhost:3000/api/v1/users",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: "RegistrationFlow",
-          email: "registration.flow@email.com",
-          password: "secure_password",
-        }),
+    const createUserResponse = await fetch("http://localhost:3000/api/v1/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({
+        username: "RegistrationFlow",
+        email: "registration.flow@email.com",
+        password: "secure_password",
+      }),
+    });
 
     expect(createUserResponse.status).toBe(201);
 
@@ -54,24 +51,18 @@ describe("Use case: Registration Flow (all seccessful)", () => {
 
     activationTokenId = await orchestrator.extractUUID(lastEmail.text);
 
-    expect(lastEmail.text).toContain(
-      `${webserver.origin}/register/activate/${activationTokenId}`,
-    );
+    expect(lastEmail.text).toContain(`${webserver.origin}/register/activate/${activationTokenId}`);
 
-    const activationTokenObject =
-      await activation.findOneValidById(activationTokenId);
+    const activationTokenObject = await activation.findOneValidById(activationTokenId);
 
     expect(activationTokenObject.user_id).toBe(createUserResponseBody.id);
     expect(activationTokenObject.used_at).toBe(null);
   });
 
   test("Activate account", async () => {
-    const activationResponse = await fetch(
-      `http://localhost:3000/api/v1/activations/${activationTokenId}`,
-      {
-        method: "PATCH",
-      },
-    );
+    const activationResponse = await fetch(`http://localhost:3000/api/v1/activations/${activationTokenId}`, {
+      method: "PATCH",
+    });
 
     expect(activationResponse.status).toBe(200);
 
@@ -79,27 +70,20 @@ describe("Use case: Registration Flow (all seccessful)", () => {
     expect(Date.parse(activationResponseBody.used_at)).not.toBeNaN();
 
     const activatedUser = await user.findOneByUsername("RegistrationFlow");
-    expect(activatedUser.features).toEqual([
-      "create:session",
-      "read:session",
-      "update:user",
-    ]);
+    expect(activatedUser.features).toEqual(["create:session", "read:session", "update:user"]);
   });
 
   test("Login", async () => {
-    const createSessionResponse = await fetch(
-      "http://localhost:3000/api/v1/sessions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: "registration.flow@email.com",
-          password: "secure_password",
-        }),
+    const createSessionResponse = await fetch("http://localhost:3000/api/v1/sessions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({
+        email: "registration.flow@email.com",
+        password: "secure_password",
+      }),
+    });
 
     expect(createSessionResponse.status).toBe(201);
 
