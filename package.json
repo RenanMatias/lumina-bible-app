@@ -4,8 +4,8 @@
   "description": "Lumina is a modern, minimalist Bible study platform for deep reading, vibrant highlighting, and personal commentary. Shed light on the Word.",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run services:up && npm run services:wait:database && npm run migrations:up && (trap 'npm run services:stop' INT TERM ; next dev)",
-    "test": "npm run services:up && concurrently --names next,jest --hide next --kill-others --success command-jest \"next dev\" \"jest --runInBand --verbose\"",
+    "dev": "npm run services:up && npm run services:wait:database && npm run migrations:up && (trap 'npm run services:stop' INT TERM ; concurrently -p none -n next,firebase --hide firebase -k \"next dev\" \"npm run emulators\")",
+    "test": "npm run services:up && concurrently --names next,jest,firebase --hide next,firebase --kill-others --success command-jest \"next dev\" \"jest --runInBand --verbose\" \"npm run emulators\"",
     "posttest": "npm run services:stop",
     "test:watch": "jest --watchAll --runInBand --verbose",
     "services:up": "docker compose -f infra/compose.yaml up -d",
@@ -18,7 +18,8 @@
     "lint:prettier:fix": "prettier --write .",
     "lint:eslint:check": "eslint .",
     "prepare": "husky",
-    "commit": "cz"
+    "commit": "cz",
+    "emulators": "firebase emulators:start --only firestore,auth --import=./.firebase/emulators --export-on-exit=./.firebase/emulators"
   },
   "author": "",
   "license": "MIT",
