@@ -11,6 +11,7 @@ const emailHttpUrl = `http://${process.env.EMAIL_HTTP_HOST}:${process.env.EMAIL_
 async function waitForAllServices() {
   await waitForWebServer();
   await waitForEmailServer();
+  await waitForFirebaseEmulator();
 
   async function waitForWebServer() {
     return retry(fetchStatusPage, {
@@ -36,6 +37,20 @@ async function waitForAllServices() {
       const response = await fetch(emailHttpUrl);
       if (!response.ok) {
         throw new Error("Email page not available");
+      }
+    }
+  }
+
+  async function waitForFirebaseEmulator() {
+    return retry(fetchFirebaseEmulator, {
+      retries: 100,
+      maxTimeout: 1000,
+    });
+
+    async function fetchFirebaseEmulator() {
+      const response = await fetch("http://localhost:8080");
+      if (!response.ok) {
+        throw new Error("Firebase emulator not available");
       }
     }
   }
