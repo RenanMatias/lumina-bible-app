@@ -1,5 +1,13 @@
 import { Client } from "pg";
 import { ServiceError } from "./errors.js";
+import { initializeApp, getApps, getApp } from "firebase/app";
+import {
+  getFirestore,
+  connectFirestoreEmulator,
+  collection,
+  getDocs,
+} from "firebase/firestore";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
 
 async function query(queryObject) {
   let client;
@@ -18,6 +26,21 @@ async function query(queryObject) {
   }
 }
 
+async function firestoreCollection(path) {
+  try {
+    const { db } = getNewFirebaseClient();
+    const colRef = collection(db, path);
+    const snap = await getDocs(colRef);
+
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  } catch (error) {
+    throw new ServiceError({
+      message: "Erro ao acessar a coleção no Firestore.",
+      cause: error,
+    });
+  }
+}
+
 async function getNewClient() {
   const client = new Client({
     host: process.env.POSTGRES_HOST,
@@ -33,9 +56,36 @@ async function getNewClient() {
   return client;
 }
 
+function getNewFirebaseClient() {
+  const firebaseConfig = {
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+  };
+
+  const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  if (process.env.NODE_ENV === "development") {
+    if (!db._emulatorConnected) {
+      connectFirestoreEmulator(db, "127.0.0.1", 8080);
+      connectAuthEmulator(auth, "http://127.0.0.1:9099");
+      db._emulatorConnected = true;
+      console.log("🛠️ Emulator working");
+    }
+  }
+
+  return { db, auth };
+}
+
 const database = {
   query,
   getNewClient,
+  firestoreCollection,
 };
 
 export default database;
