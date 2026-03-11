@@ -19,13 +19,14 @@ export class InternalServerError extends Error {
 }
 
 export class ServiceError extends Error {
-  constructor({ cause, message }) {
+  constructor({ cause, message, action, context }) {
     super(message || "Um erro interno não esperado aconteceu.", {
       cause,
     });
     this.name = "ServiceError";
-    this.action = "Verifique se o serviço está disponível.";
+    this.action = action || "Verifique se o serviço está disponível.";
     this.statusCode = 503;
+    this.context = context;
   }
 
   toJSON() {
@@ -34,6 +35,7 @@ export class ServiceError extends Error {
       message: this.message,
       action: this.action,
       status_code: this.statusCode,
+      context: this.context,
     };
   }
 }
@@ -60,13 +62,32 @@ export class ValidationError extends Error {
 
 export class NotFoundError extends Error {
   constructor({ cause, message, action }) {
-    super(message || "Não foi possível encontrar este recurso no sistema", {
+    super(message || "Não foi possível encontrar este recurso no sistema.", {
       cause,
     });
     this.name = "NotFoundError";
-    this.action =
-      action || "Verifique se os parâmetros enviado na consulta estão certos.";
+    this.action = action || "Verifique se os parâmetros enviado na consulta estão certos.";
     this.statusCode = 404;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      status_code: this.statusCode,
+    };
+  }
+}
+
+export class ForbiddenError extends Error {
+  constructor({ cause, message, action }) {
+    super(message || "Acesso negado.", {
+      cause,
+    });
+    this.name = "ForbiddenError";
+    this.action = action || "Verifique as features necessárias antes de continuar.";
+    this.statusCode = 403;
   }
 
   toJSON() {
@@ -103,8 +124,7 @@ export class MethodNotAllowedError extends Error {
   constructor() {
     super("Método não permitido para este endpoint.");
     this.name = "MethodNotAllowedError";
-    this.action =
-      "Verifique se o método HTTP enviado é válido para este endpoint.";
+    this.action = "Verifique se o método HTTP enviado é válido para este endpoint.";
     this.statusCode = 405;
   }
 

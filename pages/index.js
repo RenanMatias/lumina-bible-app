@@ -52,13 +52,11 @@ function Home() {
               fontSize: "2em",
             }}
           >
-            📖 E se cada palavra da Sagrada Escritura tivesse sido escrita
-            pensando em você?
+            📖 E se cada palavra da Sagrada Escritura tivesse sido escrita pensando em você?
           </h2>
 
           <p style={{ fontSize: "1.2em", color: "#555" }}>
-            Estamos construindo mais do que um leitor bíblico; estamos
-            preparando um <strong>encontro</strong>.
+            Estamos construindo mais do que um leitor bíblico; estamos preparando um <strong>encontro</strong>.
           </p>
 
           <hr
@@ -80,12 +78,9 @@ function Home() {
               textAlign: "left",
             }}
           >
-            &quot;Desconhecer as Escrituras é desconhecer o próprio
-            Cristo.&quot;
+            &quot;Desconhecer as Escrituras é desconhecer o próprio Cristo.&quot;
             <br />
-            <strong style={{ color: "#2D2E30" }}>
-              — São Jerônimo, Doutor da Igreja
-            </strong>
+            <strong style={{ color: "#2D2E30" }}>— São Jerônimo, Doutor da Igreja</strong>
           </blockquote>
 
           <div
@@ -100,20 +95,18 @@ function Home() {
             </p>
             <ul style={{ listStyle: "none", padding: 0 }}>
               <li style={{ marginBottom: 15 }}>
-                👤 <strong>Imersão Pessoal:</strong> Uma tecnologia exclusiva
-                para você sentir o diálogo direto com o Criador.
+                👤 <strong>Imersão Pessoal:</strong> Uma tecnologia exclusiva para você sentir o diálogo direto com o
+                Criador.
               </li>
               <li style={{ marginBottom: 15 }}>
-                🖋️ <strong>Estudo Inteligente:</strong> Marcações avançadas,
-                tags de promessas e organização completa por cores.
+                🖋️ <strong>Estudo Inteligente:</strong> Marcações avançadas, tags de promessas e organização completa
+                por cores.
               </li>
               <li style={{ marginBottom: 15 }}>
-                🤝 <strong>Comunidade e Profundidade:</strong> Comentários
-                moderados por IA e estudos verificados.
+                🤝 <strong>Comunidade e Profundidade:</strong> Comentários moderados por IA e estudos verificados.
               </li>
               <li style={{ marginBottom: 15 }}>
-                🔍 <strong>Busca Especial:</strong> Encontre passagens com
-                precisão e agilidade profissional.
+                🔍 <strong>Busca Especial:</strong> Encontre passagens com precisão e agilidade profissional.
               </li>
             </ul>
           </div>
@@ -130,16 +123,11 @@ function Home() {
               🏗️ <strong>Estamos refinando cada detalhe...</strong>
             </p>
             <p style={{ fontSize: "0.9em" }}>
-              <em>
-                Para que sua jornada na Palavra seja profunda, organizada e
-                única.
-              </em>
+              <em>Para que sua jornada na Palavra seja profunda, organizada e única.</em>
             </p>
           </div>
 
-          <p style={{ marginTop: 40, fontWeight: "bold", color: "#C5A059" }}>
-            Deus abençoe e salve Maria!
-          </p>
+          <p style={{ marginTop: 40, fontWeight: "bold", color: "#C5A059" }}>Deus abençoe e salve Maria!</p>
 
           <footer
             style={{

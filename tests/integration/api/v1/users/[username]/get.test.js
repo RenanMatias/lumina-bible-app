@@ -12,13 +12,9 @@ describe("GET /api/v1/users/[username]", () => {
     test("With exact case match", async () => {
       await orchestrator.createUser({
         username: "SameCase",
-        email: "same_case@email.com",
-        password: "secure_password",
       });
 
-      const response2 = await fetch(
-        "http://localhost:3000/api/v1/users/SameCase",
-      );
+      const response2 = await fetch("http://localhost:3000/api/v1/users/SameCase");
 
       expect(response2.status).toBe(200);
 
@@ -27,8 +23,7 @@ describe("GET /api/v1/users/[username]", () => {
       expect(response2Body).toEqual({
         id: response2Body.id,
         username: "SameCase",
-        email: "same_case@email.com",
-        password: response2Body.password,
+        features: ["read:activation_token"],
         created_at: response2Body.created_at,
         updated_at: response2Body.updated_at,
       });
@@ -41,13 +36,9 @@ describe("GET /api/v1/users/[username]", () => {
     test("With case mismatch", async () => {
       await orchestrator.createUser({
         username: "DifferentCase",
-        email: "different_case@email.com",
-        password: "secure_password",
       });
 
-      const response2 = await fetch(
-        "http://localhost:3000/api/v1/users/differentcase",
-      );
+      const response2 = await fetch("http://localhost:3000/api/v1/users/differentcase");
 
       expect(response2.status).toBe(200);
 
@@ -56,8 +47,7 @@ describe("GET /api/v1/users/[username]", () => {
       expect(response2Body).toEqual({
         id: response2Body.id,
         username: "DifferentCase",
-        email: "different_case@email.com",
-        password: response2Body.password,
+        features: ["read:activation_token"],
         created_at: response2Body.created_at,
         updated_at: response2Body.updated_at,
       });
@@ -68,9 +58,7 @@ describe("GET /api/v1/users/[username]", () => {
     });
 
     test("With nonexistant username", async () => {
-      const response = await fetch(
-        "http://localhost:3000/api/v1/users/InexistentUser",
-      );
+      const response = await fetch("http://localhost:3000/api/v1/users/InexistentUser");
 
       expect(response.status).toBe(404);
 
