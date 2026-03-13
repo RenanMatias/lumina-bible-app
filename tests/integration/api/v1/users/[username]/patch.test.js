@@ -195,7 +195,13 @@ describe("PATCH /api/v1/users/[username]", () => {
         lastname: createdUser.lastname,
         biological_sex: null,
         username: "uniqueUser2",
-        features: ["create:session", "read:session", "update:user"],
+        features: [
+          "create:session",
+          "read:session",
+          "update:user",
+          "read:scripture",
+          "read:scripture:immersive_reading",
+        ],
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
       });
@@ -233,7 +239,13 @@ describe("PATCH /api/v1/users/[username]", () => {
         lastname: createdUser.lastname,
         biological_sex: null,
         username: createdUser.username,
-        features: ["create:session", "read:session", "update:user"],
+        features: [
+          "create:session",
+          "read:session",
+          "update:user",
+          "read:scripture",
+          "read:scripture:immersive_reading",
+        ],
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
       });
@@ -271,7 +283,13 @@ describe("PATCH /api/v1/users/[username]", () => {
         lastname: createdUser.lastname,
         biological_sex: null,
         username: createdUser.username,
-        features: ["create:session", "read:session", "update:user"],
+        features: [
+          "create:session",
+          "read:session",
+          "update:user",
+          "read:scripture",
+          "read:scripture:immersive_reading",
+        ],
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
       });

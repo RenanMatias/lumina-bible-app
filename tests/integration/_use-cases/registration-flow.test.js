@@ -37,7 +37,6 @@ describe("Use case: Registration Flow (all seccessful)", () => {
 
     expect(createUserResponseBody).toEqual({
       id: createUserResponseBody.id,
-
       firstname: "First Name",
       lastname: "Last Name",
       biological_sex: "male",
@@ -77,7 +76,13 @@ describe("Use case: Registration Flow (all seccessful)", () => {
     expect(Date.parse(activationResponseBody.used_at)).not.toBeNaN();
 
     const activatedUser = await user.findOneByUsername("RegistrationFlow");
-    expect(activatedUser.features).toEqual(["create:session", "read:session", "update:user"]);
+    expect(activatedUser.features).toEqual([
+      "create:session",
+      "read:session",
+      "update:user",
+      "read:scripture",
+      "read:scripture:immersive_reading",
+    ]);
   });
 
   test("Login", async () => {

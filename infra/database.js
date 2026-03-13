@@ -1,12 +1,7 @@
 import { Client } from "pg";
 import { ServiceError } from "./errors.js";
 import { initializeApp, getApps, getApp } from "firebase/app";
-import {
-  getFirestore,
-  connectFirestoreEmulator,
-  collection,
-  getDocs,
-} from "firebase/firestore";
+import { getFirestore, connectFirestoreEmulator, collection, getDocs } from "firebase/firestore";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
 
 async function query(queryObject) {

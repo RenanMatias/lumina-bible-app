@@ -23,8 +23,55 @@ async function findBookByPath(path) {
   return book;
 }
 
+async function formatChapter(chapters, userObject, immersiveReading) {
+  for (const chapter of chapters) {
+    for (const pericope of chapter.pericopes) {
+      pericope.verses = pericope.verses.map((verse) => replaceVersePlaceholders(verse, userObject, immersiveReading));
+    }
+  }
+
+  return chapters;
+}
+
+function replaceVersePlaceholders(verse, userObject, immersiveReading) {
+  const keysToReplace = { name: userObject.firstname, hide: "" };
+  const placeholderRegex = /\{\{(.*?)\}\}/g;
+  const textsToFormat = verse.match(placeholderRegex);
+
+  if (!textsToFormat) {
+    return verse;
+  }
+
+  for (const text of textsToFormat) {
+    const placeholderContent = text.replace("{{", "").replace("}}", "").trim().split("|");
+
+    let immersiveText;
+    if (placeholderContent.length === 3 && userObject.biological_sex === "female") {
+      immersiveText = placeholderContent[1].trim();
+    } else {
+      immersiveText = placeholderContent[0].trim();
+    }
+    const defaultText = placeholderContent.at(-1).trim();
+
+    if (immersiveReading) {
+      const imersiveTextIsKey = Object.hasOwn(keysToReplace, immersiveText);
+      if (imersiveTextIsKey) {
+        const replacementValue = keysToReplace[immersiveText];
+        verse = verse.replace(text, replacementValue);
+      } else {
+        verse = verse.replace(text, immersiveText);
+      }
+    } else {
+      verse = verse.replace(text, defaultText);
+    }
+  }
+
+  return verse;
+}
+
 const scripture = {
   findBookByPath,
+  formatChapter,
 };
 
 export default scripture;

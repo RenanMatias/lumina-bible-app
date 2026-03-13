@@ -22,6 +22,10 @@ const availableFeatures = [
   // STATUS
   "read:status",
   "read:status:all",
+
+  // SCRIPTURE
+  "read:scripture",
+  "read:scripture:immersive_reading",
 ];
 
 function can(user, feature, resource) {
