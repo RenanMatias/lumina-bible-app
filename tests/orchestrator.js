@@ -70,6 +70,9 @@ async function createUser(userObject) {
     username: userObject?.username || faker.internet.username().replace(/[_.-]/g, ""),
     email: userObject?.email || faker.internet.email(),
     password: userObject?.password || "validpassword",
+    firstname: userObject?.firstname || faker.person.firstName(),
+    lastname: userObject?.lastname || faker.person.lastName(),
+    biological_sex: userObject?.biological_sex || null,
   });
 }
 

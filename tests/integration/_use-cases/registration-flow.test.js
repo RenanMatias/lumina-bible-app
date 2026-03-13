@@ -22,6 +22,9 @@ describe("Use case: Registration Flow (all seccessful)", () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        firstname: "First Name",
+        lastname: "Last Name",
+        biological_sex: "male",
         username: "RegistrationFlow",
         email: "registration.flow@email.com",
         password: "secure_password",
@@ -34,6 +37,10 @@ describe("Use case: Registration Flow (all seccessful)", () => {
 
     expect(createUserResponseBody).toEqual({
       id: createUserResponseBody.id,
+
+      firstname: "First Name",
+      lastname: "Last Name",
+      biological_sex: "male",
       username: "RegistrationFlow",
       features: ["read:activation_token"],
       created_at: createUserResponseBody.created_at,
