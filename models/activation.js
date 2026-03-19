@@ -103,7 +103,7 @@ async function create(userId) {
 
 async function sendEmailToUser(user, activationToken) {
   await email.send({
-    from: "Lumina Escritura <contato@lumina.com.br>",
+    from: "Lumina Escritura <contato@alerts.luminaescritura.com.br>",
     to: user.email,
     subject: "Ative seu cadastro no Lumina Escritura!",
     text: `${user.username}, clique no link abaixo para ativar o seu cadastro no Lumina Escritura:
