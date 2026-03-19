@@ -44,7 +44,7 @@ describe("Use case: Registration Flow (all seccessful)", () => {
   test("Receive activation email", async () => {
     const lastEmail = await orchestrator.getLastEmail();
 
-    expect(lastEmail.sender).toBe("<contato@lumina.com.br>");
+    expect(lastEmail.sender).toBe("<contato@alerts.luminaescritura.com.br>");
     expect(lastEmail.recipients[0]).toBe("<registration.flow@email.com>");
     expect(lastEmail.subject).toBe("Ative seu cadastro no Lumina Escritura!");
     expect(lastEmail.text).toContain("RegistrationFlow");
