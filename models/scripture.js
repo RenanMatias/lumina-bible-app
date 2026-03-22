@@ -1,26 +1,129 @@
 import database from "infra/database.js";
-import { NotFoundError } from "infra/errors.js";
+import { NotFoundError, ValidationError } from "infra/errors.js";
 
-async function findBookByPath(path) {
-  const [, language, version, testament, bookId] = path.split("/");
-  const basePath = `${language}/${version}/${testament}`;
-
-  const books = await database.firestoreCollection(basePath);
-  const book = books.find((b) => b.id === bookId);
-
-  if (!book) {
-    throw new NotFoundError({
-      message: "Book not found.",
-      action: "Verify if the book name is correct.",
+async function getAllBooks(language, version) {
+  if (!language || !version) {
+    throw new ValidationError({
+      message: "Os parâmetros de idioma e versão da Bíblia são obrigatórios para acessar este recurso.",
+      action: "Verifique se os parâmetros de idioma e versão da Bíblia estão presentes na requisição.",
     });
   }
 
-  const bookPath = `${basePath}/${bookId}/chapters`;
-  const chapters = await database.firestoreCollection(bookPath);
+  const booksFound = await runSelectQuery(language, version);
 
-  book.chapters = chapters;
+  return booksFound;
 
-  return book;
+  async function runSelectQuery(language, version) {
+    const results = await database.query({
+      text: `
+      SELECT
+        *
+      FROM
+        scripture_books
+      WHERE
+        LOWER(language) = LOWER($1)
+        AND LOWER(version) = LOWER($2)
+      ;`,
+      values: [language, version],
+    });
+
+    if (results.rowCount === 0) {
+      throw new NotFoundError({
+        message: "O livro ou a versão da Bíblia informados não foram encontrados no sistema.",
+        action: "Verifique se os parâmetros de idioma e versão da Bíblia estão digitados corretamente.",
+      });
+    }
+
+    return results.rows;
+  }
+}
+
+async function findOneById(id) {
+  const bookFound = await runSelectQuery(id);
+
+  return bookFound;
+
+  async function runSelectQuery(id) {
+    const results = await database.query({
+      text: `
+      SELECT
+        *
+      FROM
+        scripture_books
+      WHERE
+        id = $1
+      LIMIT
+        1
+      ;`,
+      values: [id],
+    });
+
+    if (results.rowCount === 0) {
+      throw new NotFoundError({
+        message: "O livro informado não foi encontrado no sistema.",
+        action: "Verifique se o livro existe e se o id do livro está correto.",
+      });
+    }
+
+    return results.rows[0];
+  }
+}
+
+async function findBook(language, version, book) {
+  const bookFound = await runSelectQuery(language, version, book);
+
+  return bookFound;
+
+  async function runSelectQuery(language, version, book) {
+    const results = await database.query({
+      text: `
+      SELECT
+        *
+      FROM
+        scripture_books
+      WHERE
+        LOWER(language) = LOWER($1)
+        AND LOWER(version) = LOWER($2)
+        AND LOWER(book) = LOWER($3)
+      LIMIT
+        1
+      ;`,
+      values: [language, version, book],
+    });
+
+    if (results.rowCount === 0) {
+      throw new NotFoundError({
+        message: "O livro informado não foi encontrado no sistema.",
+        action: "Verifique se o livro está digitado corretamente.",
+      });
+    }
+
+    return results.rows[0];
+  }
+}
+
+async function getAllChaptersFromBook(bookId) {
+  const chaptersFound = await runSelectQuery(bookId);
+
+  return chaptersFound;
+
+  async function runSelectQuery(bookId) {
+    const results = await database.query({
+      text: `
+      SELECT
+        id, number, created_at, updated_at
+      FROM
+        scripture_chapters
+      WHERE
+        book_id = $1
+      ORDER BY
+        number ASC
+      ;`,
+      values: [bookId],
+    });
+
+    return results.rows;
+  }
 }
 
 async function formatChapter(chapters, userObject, immersiveReading) {
@@ -70,7 +173,10 @@ function replaceVersePlaceholders(verse, userObject, immersiveReading) {
 }
 
 const scripture = {
-  findBookByPath,
+  getAllBooks,
+  findOneById,
+  findBook,
+  getAllChaptersFromBook,
   formatChapter,
 };
 

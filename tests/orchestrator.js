@@ -12,7 +12,6 @@ const emailHttpUrl = `http://${process.env.EMAIL_HTTP_HOST}:${process.env.EMAIL_
 async function waitForAllServices() {
   await waitForWebServer();
   await waitForEmailServer();
-  await waitForFirebaseEmulator();
 
   async function waitForWebServer() {
     return retry(fetchStatusPage, {
@@ -41,20 +40,6 @@ async function waitForAllServices() {
       }
     }
   }
-
-  async function waitForFirebaseEmulator() {
-    return retry(fetchFirebaseEmulator, {
-      retries: 100,
-      maxTimeout: 1000,
-    });
-
-    async function fetchFirebaseEmulator() {
-      const response = await fetch("http://localhost:8080");
-      if (!response.ok) {
-        throw new Error("Firebase emulator not available");
-      }
-    }
-  }
 }
 
 async function clearDatabase() {
@@ -63,6 +48,93 @@ async function clearDatabase() {
 
 async function runPendingMigrations() {
   await migrator.runPendingMigrations();
+}
+
+async function seedScriptureDb() {
+  const books = await database.query(`
+    INSERT INTO 
+      scripture_books
+        (
+          language,
+          version,
+          testament,
+          book,
+          name,
+          short_name,
+          author
+        )
+    VALUES
+      (
+        'pt-br',
+        'cnbb',
+        'Novo Testamento',
+        '1Jo',
+        'Primeira Carta de São João',
+        '1 João',
+        'João'
+      ),
+      (
+        'pt-br',
+        'cnbb',
+        'Novo Testamento',
+        'Jo',
+        'Evangelho de São João',
+        'João',
+        'João'
+      )
+    RETURNING
+      *
+    ;`);
+
+  const chapters = await database.query({
+    text: `
+      INSERT INTO 
+        scripture_chapters (book_id, number)
+      VALUES
+        ($1, 1), ($1, 2)
+      RETURNING
+        *
+      ;`,
+    values: [books.rows[0].id],
+  });
+
+  const pericopes = await database.query({
+    text: `
+      INSERT INTO 
+        scripture_pericopes(chapter_id, title)
+      VALUES
+        ($1, 'Title Pericope')
+      RETURNING
+        *
+      ;`,
+    values: [chapters.rows[0].id],
+  });
+
+  await database.query({
+    text: `
+      INSERT INTO 
+        scripture_verses (pericope_id, number, verse)
+      VALUES
+        ($1, 1, 'text {{name|Meus filhinhos}} text {{name|Meus filhinhos}} text'),
+        ($1, 2, 'text {{ti|vós}} text'),
+        ($1, 3, 'text {{estejas|estejais}} text'),
+        ($1, 4, 'text {{te|vos}} text')
+      ;`,
+    values: [pericopes.rows[0].id],
+  });
+}
+
+async function getFirstBook() {
+  const results = await database.query(`
+    SELECT
+      *
+    FROM
+      scripture_books
+    LIMIT
+      1
+  ;`);
+
+  return results.rows[0];
 }
 
 async function createUser(userObject) {
@@ -120,6 +192,8 @@ const orchestrator = {
   waitForAllServices,
   clearDatabase,
   runPendingMigrations,
+  seedScriptureDb,
+  getFirstBook,
   createUser,
   activateUser,
   createSession,
