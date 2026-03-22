@@ -1,8 +1,8 @@
 import { Client } from "pg";
 import { ServiceError } from "./errors.js";
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore, connectFirestoreEmulator, collection, getDocs } from "firebase/firestore";
-import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 async function query(queryObject) {
   let client;
@@ -64,15 +64,6 @@ function getNewFirebaseClient() {
   const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const auth = getAuth(app);
-
-  if (process.env.NODE_ENV === "development") {
-    if (!db._emulatorConnected) {
-      connectFirestoreEmulator(db, "127.0.0.1", 8080);
-      connectAuthEmulator(auth, "http://127.0.0.1:9099");
-      db._emulatorConnected = true;
-      console.log("🛠️ Emulator working");
-    }
-  }
 
   return { db, auth };
 }
