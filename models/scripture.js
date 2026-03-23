@@ -38,7 +38,7 @@ async function getAllBooks(language, version) {
   }
 }
 
-async function findOneById(id) {
+async function findOneBookById(id) {
   const bookFound = await runSelectQuery(id);
 
   return bookFound;
@@ -111,7 +111,7 @@ async function getAllChaptersFromBook(bookId) {
     const results = await database.query({
       text: `
       SELECT
-        id, number, created_at, updated_at
+        *
       FROM
         scripture_chapters
       WHERE
@@ -126,14 +126,83 @@ async function getAllChaptersFromBook(bookId) {
   }
 }
 
-async function formatChapter(chapters, userObject, immersiveReading) {
-  for (const chapter of chapters) {
-    for (const pericope of chapter.pericopes) {
-      pericope.verses = pericope.verses.map((verse) => replaceVersePlaceholders(verse, userObject, immersiveReading));
-    }
-  }
+async function findOneChapterById(id) {
+  const chapterFound = await runSelectQuery(id);
 
-  return chapters;
+  return chapterFound;
+
+  async function runSelectQuery(id) {
+    const results = await database.query({
+      text: `
+      SELECT
+        *
+      FROM
+        scripture_chapters
+      WHERE
+        id = $1
+      LIMIT
+        1
+      ;`,
+      values: [id],
+    });
+
+    if (results.rowCount === 0) {
+      throw new NotFoundError({
+        message: "O capítulo informado não foi encontrado no sistema.",
+        action: "Verifique se o capítulo existe e se o id do capítulo está correto.",
+      });
+    }
+
+    return results.rows[0];
+  }
+}
+
+async function findPericopesByChapterId(chapterId) {
+  const pericopesFound = await runSelectQuery(chapterId);
+
+  return pericopesFound;
+
+  async function runSelectQuery(chapterId) {
+    const results = await database.query({
+      text: `
+      SELECT
+        *
+      FROM
+        scripture_pericopes
+      WHERE
+        chapter_id = $1
+      ORDER BY
+        created_at ASC
+      ;`,
+      values: [chapterId],
+    });
+
+    return results.rows;
+  }
+}
+
+async function findVersesByPericopeId(pericopeId) {
+  const versesFound = await runSelectQuery(pericopeId);
+
+  return versesFound;
+
+  async function runSelectQuery(pericopeId) {
+    const results = await database.query({
+      text: `
+      SELECT
+        *
+      FROM
+        scripture_verses
+      WHERE
+        pericope_id = $1
+      ORDER BY
+        number ASC
+      ;`,
+      values: [pericopeId],
+    });
+
+    return results.rows;
+  }
 }
 
 function replaceVersePlaceholders(verse, userObject, immersiveReading) {
@@ -174,10 +243,13 @@ function replaceVersePlaceholders(verse, userObject, immersiveReading) {
 
 const scripture = {
   getAllBooks,
-  findOneById,
+  findOneBookById,
   findBook,
   getAllChaptersFromBook,
-  formatChapter,
+  findOneChapterById,
+  findPericopesByChapterId,
+  findVersesByPericopeId,
+  replaceVersePlaceholders,
 };
 
 export default scripture;

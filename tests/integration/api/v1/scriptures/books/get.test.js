@@ -32,7 +32,7 @@ describe("GET /api/v1/scriptures/books", () => {
 
       expect(responseBody).toEqual({
         name: "ValidationError",
-        message: "Os parametrôs de idioma e versão da Bíblia são obrigatórios para acessar este recurso.",
+        message: "Os parâmetros de idioma e versão da Bíblia são obrigatórios para acessar este recurso.",
         action: "Verifique se os parâmetros de idioma e versão da Bíblia estão presentes na requisição.",
         status_code: 400,
       });
@@ -46,7 +46,7 @@ describe("GET /api/v1/scriptures/books", () => {
 
       expect(responseBody).toEqual({
         name: "ValidationError",
-        message: "Os parametrôs de idioma e versão da Bíblia são obrigatórios para acessar este recurso.",
+        message: "Os parâmetros de idioma e versão da Bíblia são obrigatórios para acessar este recurso.",
         action: "Verifique se os parâmetros de idioma e versão da Bíblia estão presentes na requisição.",
         status_code: 400,
       });

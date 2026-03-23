@@ -53,35 +53,10 @@ async function runPendingMigrations() {
 async function seedScriptureDb() {
   const books = await database.query(`
     INSERT INTO 
-      scripture_books
-        (
-          language,
-          version,
-          testament,
-          book,
-          name,
-          short_name,
-          author
-        )
+      scripture_books (language, version, testament, book, name, short_name, author)
     VALUES
-      (
-        'pt-br',
-        'cnbb',
-        'Novo Testamento',
-        '1Jo',
-        'Primeira Carta de São João',
-        '1 João',
-        'João'
-      ),
-      (
-        'pt-br',
-        'cnbb',
-        'Novo Testamento',
-        'Jo',
-        'Evangelho de São João',
-        'João',
-        'João'
-      )
+      ('pt-br', 'cnbb', 'Novo Testamento', '1Jo', 'Primeira Carta de São João', '1 João', 'João'),
+      ('pt-br', 'cnbb', 'Novo Testamento', 'Jo', 'Evangelho de São João', 'João', 'João')
     RETURNING
       *
     ;`);
@@ -118,7 +93,8 @@ async function seedScriptureDb() {
         ($1, 1, 'text {{name|Meus filhinhos}} text {{name|Meus filhinhos}} text'),
         ($1, 2, 'text {{ti|vós}} text'),
         ($1, 3, 'text {{estejas|estejais}} text'),
-        ($1, 4, 'text {{te|vos}} text')
+        ($1, 4, 'text {{te|vos}} text'),
+        ($1, 5, 'text {{Amado|Amada|Amados}} text')
       ;`,
     values: [pericopes.rows[0].id],
   });
@@ -133,6 +109,24 @@ async function getFirstBook() {
     LIMIT
       1
   ;`);
+
+  return results.rows[0];
+}
+
+async function getFirstChaptersOfBook(bookId) {
+  const results = await database.query({
+    text: `
+      SELECT
+        *
+      FROM
+        scripture_chapters
+      WHERE
+        book_id = $1
+      LIMIT
+        1
+      ;`,
+    values: [bookId],
+  });
 
   return results.rows[0];
 }
@@ -194,6 +188,7 @@ const orchestrator = {
   runPendingMigrations,
   seedScriptureDb,
   getFirstBook,
+  getFirstChaptersOfBook,
   createUser,
   activateUser,
   createSession,
