@@ -191,8 +191,17 @@ describe("PATCH /api/v1/users/[username]", () => {
 
       expect(responseBody).toEqual({
         id: createdUser.id,
+        firstname: createdUser.firstname,
+        lastname: createdUser.lastname,
+        biological_sex: null,
         username: "uniqueUser2",
-        features: ["create:session", "read:session", "update:user"],
+        features: [
+          "create:session",
+          "read:session",
+          "update:user",
+          "read:scripture",
+          "read:scripture:immersive_reading",
+        ],
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
       });
@@ -226,8 +235,17 @@ describe("PATCH /api/v1/users/[username]", () => {
 
       expect(responseBody).toEqual({
         id: createdUser.id,
+        firstname: createdUser.firstname,
+        lastname: createdUser.lastname,
+        biological_sex: null,
         username: createdUser.username,
-        features: ["create:session", "read:session", "update:user"],
+        features: [
+          "create:session",
+          "read:session",
+          "update:user",
+          "read:scripture",
+          "read:scripture:immersive_reading",
+        ],
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
       });
@@ -261,8 +279,17 @@ describe("PATCH /api/v1/users/[username]", () => {
 
       expect(responseBody).toEqual({
         id: createdUser.id,
+        firstname: createdUser.firstname,
+        lastname: createdUser.lastname,
+        biological_sex: null,
         username: createdUser.username,
-        features: ["create:session", "read:session", "update:user"],
+        features: [
+          "create:session",
+          "read:session",
+          "update:user",
+          "read:scripture",
+          "read:scripture:immersive_reading",
+        ],
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
       });
@@ -311,6 +338,9 @@ describe("PATCH /api/v1/users/[username]", () => {
 
       expect(responseBody).toEqual({
         id: defaultUser.id,
+        firstname: defaultUser.firstname,
+        lastname: defaultUser.lastname,
+        biological_sex: null,
         username: "ChangedByPrivilege",
         features: responseBody.features,
         created_at: responseBody.created_at,

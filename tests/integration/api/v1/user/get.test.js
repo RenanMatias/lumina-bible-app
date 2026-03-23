@@ -131,9 +131,18 @@ describe("GET /api/v1/user", () => {
 
       expect(responseBody).toEqual({
         id: createdUser.id,
+        firstname: createdUser.firstname,
+        lastname: createdUser.lastname,
+        biological_sex: null,
         username: "UserWithValidSession",
         email: createdUser.email,
-        features: ["create:session", "read:session", "update:user"],
+        features: [
+          "create:session",
+          "read:session",
+          "update:user",
+          "read:scripture",
+          "read:scripture:immersive_reading",
+        ],
         created_at: createdUser.created_at.toISOString(),
         updated_at: activatedUser.updated_at.toISOString(),
       });
@@ -188,9 +197,18 @@ describe("GET /api/v1/user", () => {
 
       expect(responseBody).toEqual({
         id: createdUser.id,
+        firstname: createdUser.firstname,
+        lastname: createdUser.lastname,
+        biological_sex: null,
         username: "UserWithHalfwayExpiredSession",
         email: createdUser.email,
-        features: ["create:session", "read:session", "update:user"],
+        features: [
+          "create:session",
+          "read:session",
+          "update:user",
+          "read:scripture",
+          "read:scripture:immersive_reading",
+        ],
         created_at: createdUser.created_at.toISOString(),
         updated_at: activatedUser.updated_at.toISOString(),
       });

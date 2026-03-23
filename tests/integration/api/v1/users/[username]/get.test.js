@@ -22,6 +22,9 @@ describe("GET /api/v1/users/[username]", () => {
 
       expect(response2Body).toEqual({
         id: response2Body.id,
+        firstname: response2Body.firstname,
+        lastname: response2Body.lastname,
+        biological_sex: null,
         username: "SameCase",
         features: ["read:activation_token"],
         created_at: response2Body.created_at,
@@ -46,6 +49,9 @@ describe("GET /api/v1/users/[username]", () => {
 
       expect(response2Body).toEqual({
         id: response2Body.id,
+        firstname: response2Body.firstname,
+        lastname: response2Body.lastname,
+        biological_sex: null,
         username: "DifferentCase",
         features: ["read:activation_token"],
         created_at: response2Body.created_at,

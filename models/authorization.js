@@ -22,6 +22,10 @@ const availableFeatures = [
   // STATUS
   "read:status",
   "read:status:all",
+
+  // SCRIPTURE
+  "read:scripture",
+  "read:scripture:immersive_reading",
 ];
 
 function can(user, feature, resource) {
@@ -53,6 +57,9 @@ function filterOutput(user, feature, resource) {
   if (feature === "read:user") {
     return {
       id: resource.id,
+      firstname: resource.firstname,
+      lastname: resource.lastname,
+      biological_sex: resource.biological_sex,
       username: resource.username,
       features: resource.features,
       created_at: resource.created_at,
@@ -64,6 +71,9 @@ function filterOutput(user, feature, resource) {
     if (user.id === resource.id) {
       return {
         id: resource.id,
+        firstname: resource.firstname,
+        lastname: resource.lastname,
+        biological_sex: resource.biological_sex,
         username: resource.username,
         email: resource.email,
         features: resource.features,
