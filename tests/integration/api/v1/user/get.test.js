@@ -13,7 +13,7 @@ beforeAll(async () => {
 
 describe("GET /api/v1/user", () => {
   describe("Anonymous user", () => {
-    test("Retrieving the endpoint", async () => {
+    test("Running the endpoint", async () => {
       const response = await fetch(`${webserver.origin}/api/v1/user`);
 
       expect(response.status).toBe(403);
