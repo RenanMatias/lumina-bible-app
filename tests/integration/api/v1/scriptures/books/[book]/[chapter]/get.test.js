@@ -70,7 +70,7 @@ describe("GET /api/v1/scriptures/books/[book]/[chapter]", () => {
     test("With nonexistent book", async () => {
       const createdUser = await orchestrator.createUser();
       await orchestrator.activateUser(createdUser);
-      const sessionObject = await orchestrator.createSession(createdUser.id);
+      const sessionObject = await orchestrator.createSession(createdUser);
 
       const book = await orchestrator.getFirstBook();
       const nonexistentChapterId = "a7d4f1c2-9b3e-4e68-8c5a-2f9d7b6e1a0c";
@@ -96,7 +96,7 @@ describe("GET /api/v1/scriptures/books/[book]/[chapter]", () => {
     test("With existent book", async () => {
       const createdUser = await orchestrator.createUser();
       await orchestrator.activateUser(createdUser);
-      const sessionObject = await orchestrator.createSession(createdUser.id);
+      const sessionObject = await orchestrator.createSession(createdUser);
 
       const book = await orchestrator.getFirstBook();
       const chapter = await orchestrator.getFirstChaptersOfBook(book.id);
@@ -146,7 +146,7 @@ describe("GET /api/v1/scriptures/books/[book]/[chapter]", () => {
           biological_sex: "male",
         });
         await orchestrator.activateUser(createdUser);
-        const sessionObject = await orchestrator.createSession(createdUser.id);
+        const sessionObject = await orchestrator.createSession(createdUser);
 
         const book = await orchestrator.getFirstBook();
         const chapter = await orchestrator.getFirstChaptersOfBook(book.id);
@@ -198,7 +198,7 @@ describe("GET /api/v1/scriptures/books/[book]/[chapter]", () => {
           biological_sex: "female",
         });
         await orchestrator.activateUser(createdUser);
-        const sessionObject = await orchestrator.createSession(createdUser.id);
+        const sessionObject = await orchestrator.createSession(createdUser);
 
         const book = await orchestrator.getFirstBook();
         const chapter = await orchestrator.getFirstChaptersOfBook(book.id);

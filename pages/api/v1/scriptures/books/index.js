@@ -2,12 +2,10 @@ import controller from "infra/controller";
 import { createRouter } from "next-connect";
 import scripture from "models/scripture.js";
 
-const router = createRouter();
-
-router.use(controller.injectAnonymousOrUser);
-router.get(controller.canRequest("read:scripture"), getHandler);
-
-export default router.handler(controller.errorHandlers);
+export default createRouter()
+  .use(controller.injectAnonymousOrUser)
+  .get(controller.canRequest("read:scripture"), getHandler)
+  .handler(controller.errorHandlers);
 
 async function getHandler(request, response) {
   const language = request.query.language;

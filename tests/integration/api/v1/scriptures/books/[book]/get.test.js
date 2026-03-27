@@ -1,5 +1,6 @@
 import { version as uuidVersion } from "uuid";
 import orchestrator from "tests/orchestrator.js";
+import webserver from "infra/webserver.js";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -11,9 +12,7 @@ beforeAll(async () => {
 describe("GET /api/v1/scriptures/books/[book]", () => {
   describe("Anonymous user", () => {
     test("With nonexistent book", async () => {
-      const response = await fetch(
-        "http://localhost:3000/api/v1/scriptures/books/3f9c2b8e-6a1d-4c7f-9b52-8d4e0a7c1f3b",
-      );
+      const response = await fetch(`${webserver.origin}/api/v1/scriptures/books/3f9c2b8e-6a1d-4c7f-9b52-8d4e0a7c1f3b`);
       expect(response.status).toBe(404);
 
       const responseBody = await response.json();

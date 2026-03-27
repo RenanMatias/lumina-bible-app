@@ -1,5 +1,6 @@
 import { version as uuidVersion } from "uuid";
 import orchestrator from "tests/orchestrator.js";
+import webserver from "infra/webserver.js";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -11,7 +12,7 @@ beforeAll(async () => {
 describe("GET /api/v1/scriptures/books", () => {
   describe("Anonymous user", () => {
     test("Without query strings", async () => {
-      const response = await fetch("http://localhost:3000/api/v1/scriptures/books");
+      const response = await fetch(`${webserver.origin}/api/v1/scriptures/books`);
       expect(response.status).toBe(400);
 
       const responseBody = await response.json();
@@ -25,7 +26,7 @@ describe("GET /api/v1/scriptures/books", () => {
     });
 
     test("Without version query string", async () => {
-      const response = await fetch("http://localhost:3000/api/v1/scriptures/books?language=pt-br");
+      const response = await fetch(`${webserver.origin}/api/v1/scriptures/books?language=pt-br`);
       expect(response.status).toBe(400);
 
       const responseBody = await response.json();
@@ -39,7 +40,7 @@ describe("GET /api/v1/scriptures/books", () => {
     });
 
     test("Without language query string", async () => {
-      const response = await fetch("http://localhost:3000/api/v1/scriptures/books?version=cnbb");
+      const response = await fetch(`${webserver.origin}/api/v1/scriptures/books?version=cnbb`);
       expect(response.status).toBe(400);
 
       const responseBody = await response.json();
@@ -53,7 +54,7 @@ describe("GET /api/v1/scriptures/books", () => {
     });
 
     test("With nonexistent language", async () => {
-      const response = await fetch("http://localhost:3000/api/v1/scriptures/books?language=nonexistent&version=cnbb");
+      const response = await fetch(`${webserver.origin}/api/v1/scriptures/books?language=nonexistent&version=cnbb`);
       expect(response.status).toBe(404);
 
       const responseBody = await response.json();
@@ -67,7 +68,7 @@ describe("GET /api/v1/scriptures/books", () => {
     });
 
     test("With nonexistent version", async () => {
-      const response = await fetch("http://localhost:3000/api/v1/scriptures/books?language=pt-br&version=nonexistent");
+      const response = await fetch(`${webserver.origin}/api/v1/scriptures/books?language=pt-br&version=nonexistent`);
       expect(response.status).toBe(404);
 
       const responseBody = await response.json();
@@ -81,7 +82,7 @@ describe("GET /api/v1/scriptures/books", () => {
     });
 
     test("With existent language and version", async () => {
-      const response = await fetch("http://localhost:3000/api/v1/scriptures/books?language=pt-br&version=cnbb");
+      const response = await fetch(`${webserver.origin}/api/v1/scriptures/books?language=pt-br&version=cnbb`);
       expect(response.status).toBe(200);
 
       const responseBody = await response.json();

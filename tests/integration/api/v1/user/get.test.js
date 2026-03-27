@@ -3,6 +3,7 @@ import setCookieParser from "set-cookie-parser";
 
 import orchestrator from "tests/orchestrator.js";
 import session from "models/session.js";
+import webserver from "infra/webserver.js";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -12,8 +13,8 @@ beforeAll(async () => {
 
 describe("GET /api/v1/user", () => {
   describe("Anonymous user", () => {
-    test("Retrieving the endpoint", async () => {
-      const response = await fetch("http://localhost:3000/api/v1/user");
+    test("Running the endpoint", async () => {
+      const response = await fetch(`${webserver.origin}/api/v1/user`);
 
       expect(response.status).toBe(403);
 
@@ -33,7 +34,7 @@ describe("GET /api/v1/user", () => {
       const nonexistentToken =
         "4b4cd2bbced904b1115e52ab174d624fc7985e22ff035800699377e206a90fa39dd43e4ee36280fd84b152fff657ea9a";
 
-      const response = await fetch("http://localhost:3000/api/v1/user", {
+      const response = await fetch(`${webserver.origin}/api/v1/user`, {
         headers: {
           cookie: `session_id=${nonexistentToken}`,
         },
@@ -61,23 +62,24 @@ describe("GET /api/v1/user", () => {
         maxAge: -1,
         path: "/",
         httpOnly: true,
+        sameSite: "Lax",
       });
     });
 
     test("With expired session", async () => {
       jest.useFakeTimers({
-        now: new Date(Date.now() - session.EXPIRATION_IN_MILISECONDS),
+        now: new Date(Date.now() - session.EXPIRATION_IN_MILLISECONDS),
       });
 
       const createdUser = await orchestrator.createUser({
         username: "UserWithExpiredSession",
       });
 
-      const sessionObject = await orchestrator.createSession(createdUser.id);
+      const sessionObject = await orchestrator.createSession(createdUser);
 
       jest.useRealTimers();
 
-      const response = await fetch("http://localhost:3000/api/v1/user", {
+      const response = await fetch(`${webserver.origin}/api/v1/user`, {
         headers: {
           Cookie: `session_id=${sessionObject.token}`,
         },
@@ -105,6 +107,7 @@ describe("GET /api/v1/user", () => {
         maxAge: -1,
         path: "/",
         httpOnly: true,
+        sameSite: "Lax",
       });
     });
 
@@ -114,9 +117,9 @@ describe("GET /api/v1/user", () => {
       });
 
       const activatedUser = await orchestrator.activateUser(createdUser);
-      const sessionObject = await orchestrator.createSession(createdUser.id);
+      const sessionObject = await orchestrator.createSession(createdUser);
 
-      const response = await fetch("http://localhost:3000/api/v1/user", {
+      const response = await fetch(`${webserver.origin}/api/v1/user`, {
         headers: {
           Cookie: `session_id=${sessionObject.token}`,
         },
@@ -165,15 +168,16 @@ describe("GET /api/v1/user", () => {
       expect(parsedSetCookie.session_id).toEqual({
         name: "session_id",
         value: sessionObject.token,
-        maxAge: session.EXPIRATION_IN_MILISECONDS / 1000,
+        maxAge: session.EXPIRATION_IN_MILLISECONDS / 1000,
         path: "/",
         httpOnly: true,
+        sameSite: "Lax",
       });
     });
 
     test("With halfway-expired session", async () => {
       jest.useFakeTimers({
-        now: new Date(Date.now() - session.EXPIRATION_IN_MILISECONDS / 2),
+        now: new Date(Date.now() - session.EXPIRATION_IN_MILLISECONDS / 2),
       });
 
       const createdUser = await orchestrator.createUser({
@@ -181,11 +185,11 @@ describe("GET /api/v1/user", () => {
       });
 
       const activatedUser = await orchestrator.activateUser(createdUser);
-      const sessionObject = await orchestrator.createSession(createdUser.id);
+      const sessionObject = await orchestrator.createSession(createdUser);
 
       jest.useRealTimers();
 
-      const response = await fetch("http://localhost:3000/api/v1/user", {
+      const response = await fetch(`${webserver.origin}/api/v1/user`, {
         headers: {
           Cookie: `session_id=${sessionObject.token}`,
         },
@@ -231,9 +235,10 @@ describe("GET /api/v1/user", () => {
       expect(parsedSetCookie.session_id).toEqual({
         name: "session_id",
         value: sessionObject.token,
-        maxAge: session.EXPIRATION_IN_MILISECONDS / 1000,
+        maxAge: session.EXPIRATION_IN_MILLISECONDS / 1000,
         path: "/",
         httpOnly: true,
+        sameSite: "Lax",
       });
     });
   });
