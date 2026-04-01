@@ -1,11 +1,120 @@
 import React from "react";
-import { Button } from "@primer/react";
-import { RocketIcon } from "@primer/octicons-react";
+import { PageLayout, Label, Stack, Heading, Text, Flash } from "@primer/react";
+import { CodeOfConductIcon, FeedMergedIcon, FeedStarIcon } from "@primer/octicons-react";
 
-export default function LeadingVisual() {
+const styles = {
+  quote: {
+    margin: 0,
+    padding: "clamp(12px, 2vw, 16px)",
+    borderLeft: "4px solid var(--borderColor-attention-emphasis)",
+    borderRadius: 10,
+    background: "var(--bgColor-attention-muted)",
+    fontStyle: "italic",
+    minWidth: 0,
+  },
+};
+
+export default function Home() {
   return (
-    <Button variant="primary" leadingVisual={RocketIcon}>
-      Primer is working with Next.js!
-    </Button>
+    <>
+      <PageLayout>
+        <PageLayout.Content
+          style={{
+            margin: "10px auto",
+            padding: "40px",
+            borderRadius: 16,
+            maxWidth: 1200,
+            border: "1px solid var(--borderColor-default)",
+          }}
+        >
+          <Label variant="attention" style={{ alignSelf: "start", marginBottom: 20 }}>
+            Lumina Escritura • Em construcao
+          </Label>
+          <Stack direction={{ narrow: "vertical", regular: "horizontal" }} gap="normal" justify="center">
+            <Stack gap="normal" style={{ flex: 1, minWidth: 0 }}>
+              <Heading
+                as="h1"
+                style={{
+                  display: "block",
+                  fontSize: "clamp(2rem, 5vw, 3.2rem)",
+                  lineHeight: 1.2,
+                  fontWeight: "bold",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                A Palavra Viva em cada detalhe
+              </Heading>
+              <Text>
+                Estamos construindo o futuro da leitura bíblica: imersiva, comunitária e profundamente fiel à Tradição.
+              </Text>
+              <Stack style={styles.quote}>
+                <Text color="fg.default">
+                  O{" "}
+                  <Text as="strong" color="fg.default">
+                    Lumina Escritura
+                  </Text>{" "}
+                  nasce para romper a barreira entre o leitor e o texto sagrado. Imagine abrir sua Bíblia e ver que a
+                  mensagem de Cristo é dirigida nominalmente a você, enquanto conta com o suporte de uma comunidade de
+                  estudos privada e a sabedoria milenar de Santo Agostinho e São Tomás de Aquino. É mais que um app de
+                  leitura, é uma imersão na Verdade.
+                </Text>
+              </Stack>
+            </Stack>
+            <Stack gap="normal" style={{ flex: 1, minWidth: 0 }}>
+              <Heading as="h2" style={{ fontSize: "clamp(1.5rem, 3vw, 1.7rem)" }}>
+                O que estamos preparando
+              </Heading>
+              <Flash>
+                <Stack direction="row" gap={2} align="center" style={{ marginBottom: 4 }}>
+                  <CodeOfConductIcon size={"clamp(1.5rem, 3vw, 1.875rem)"} />
+                  <Text as="p" style={{ margin: 0, fontWeight: 600 }}>
+                    Leitura Imersiva
+                  </Text>
+                </Stack>
+                <Text as="p" style={{ margin: "6px 0 0" }}>
+                  A Palavra de Deus como você nunca viu. Estamos desenvolvendo uma tecnologia exclusiva de
+                  personalização onde, o nome do leitor é integrado ao texto sagrado, reforçando que a mensagem divina é
+                  uma carta de amor direta para você.
+                </Text>
+              </Flash>
+              <Flash>
+                <Stack direction="row" gap={2} align="center" style={{ marginBottom: 4 }}>
+                  <FeedMergedIcon size={"clamp(1.5rem, 3vw, 1.875rem)"} />
+                  <Text as="p" style={{ margin: 0, fontWeight: 600 }}>
+                    Comunidades de Estudo e Áreas Exclusivas
+                  </Text>
+                </Stack>
+                <Text as="p" style={{ margin: "6px 0 0" }}>
+                  Sua caminhada em grupo, com total privacidade. Crie áreas exclusivas onde você organiza seus próprios
+                  sumários, fixa comentários importantes e compartilha marcações que ajudam todos a crescerem juntos na
+                  fé.
+                </Text>
+              </Flash>
+              <Flash>
+                <Stack direction="row" gap={2} align="center" style={{ marginBottom: 4 }}>
+                  <FeedStarIcon size={"clamp(1.5rem, 3vw, 1.875rem)"} />
+                  <Text as="p" style={{ margin: 0, fontWeight: 600 }}>
+                    Navegação Ágil e Ferramentas de Estudo
+                  </Text>
+                </Stack>
+                <Text as="p" style={{ margin: "6px 0 0" }}>
+                  Encontre o que precisa em poucos cliques. Desenvolvemos um sistema de busca inteligente por
+                  versículos, marcações coloridas e organização por temas, para que sua leitura seja fluida e você gaste
+                  seu tempo no que realmente importa: a oração.
+                </Text>
+              </Flash>
+            </Stack>
+          </Stack>
+        </PageLayout.Content>
+        <PageLayout.Footer>
+          <Stack direction="row" gap={2} align="center" style={{ marginBottom: 4 }}>
+            <Text weight="semibold">Deus abencoe e salve Maria.</Text>
+            <Text as="span" size="small" weight="light">
+              {new Date().getFullYear()} • Lumina Escritura
+            </Text>
+          </Stack>
+        </PageLayout.Footer>
+      </PageLayout>
+    </>
   );
 }
