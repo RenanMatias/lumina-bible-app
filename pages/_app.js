@@ -1,5 +1,6 @@
 import "@primer/primitives/dist/css/functional/themes/light.css";
 import "@primer/primitives/dist/css/functional/themes/dark.css";
+import "../styles/globals.css";
 import { ThemeProvider, BaseStyles, Stack } from "@primer/react";
 
 function MyApp({ Component, pageProps }) {
