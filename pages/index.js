@@ -1,7 +1,9 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import { Label, Stack, Heading, Text, Flash } from "@primer/react";
 import { CodeOfConductIcon, FeedMergedIcon, FeedStarIcon } from "@primer/octicons-react";
-import { AuroraText } from "@/components/ui/aurora-text";
+import { AuroraText } from "@/components/ui/aurora-text.tsx";
+import { Marquee } from "@/components/ui/marquee.tsx";
 
 const styles = {
   quote: {
@@ -15,6 +17,85 @@ const styles = {
   },
 };
 
+const names = [
+  "Sofia",
+  "Sabrina",
+  "Fátima",
+  "Francisco",
+  "Renato",
+  "Lívia",
+  "Guilherme",
+  "Matheus",
+  "Bella",
+  "Emma",
+  "Lurdes",
+  "Silvio",
+  "Rafael",
+  "Susana",
+  "Silvana",
+  "Roberto",
+  "Ronaldo",
+  "Antônio",
+  "Allana",
+];
+
+const verses = [
+  {
+    verse:
+      '{{name}} disse-lhe: "De onde me conheces?" Jesus respondeu: "Antes que Felipe te chamasse, quando estavas debaixo da figueira, eu te vi."',
+    passage: "João 1,48",
+  },
+  {
+    verse: "Não tenhas. medo, {{name}}, pois eu te resgatei, chamei-te pelo teu nome, tu és meu!",
+    passage: "Isaías 43,1",
+  },
+  {
+    verse:
+      'Caminhando junto ao mar da Galileia, Jesus viu {{name}} e seu irmão. Estavam lançando as rede ao mar, pois eram pescadores. Jesus lhes disse: "Vinde após mim, e eu farei de vós pescadores de homens."',
+    passage: "João 4, 18-19",
+  },
+];
+
+const getRandomName = () => {
+  return names[Math.floor(Math.random() * names.length)];
+};
+
+const firstRow = verses.slice(0, verses.length / 2);
+const secondRow = verses.slice(verses.length / 2);
+const VerseCard = ({ verse, passage }) => {
+  const [randomName, setRandomName] = useState(null);
+
+  useEffect(() => {
+    setRandomName(getRandomName());
+  }, []);
+
+  const renderVerse = () => {
+    if (!randomName) return verse; // evita mismatch inicial
+
+    const parts = verse.split("{{name}}");
+
+    return parts.map((part, index) => (
+      <React.Fragment key={index}>
+        {part}
+        {index < parts.length - 1 && <span style={{ color: "#38bdf8", fontWeight: 600 }}>{randomName}</span>}
+      </React.Fragment>
+    ));
+  };
+
+  return (
+    <Flash>
+      <Stack gap="condensed" style={{ width: 500, padding: "clamp(12px, 2vw, 16px)" }}>
+        <Text as="p" size="medium" weight="light" style={{ color: "#8892B0" }}>
+          {renderVerse()}
+        </Text>
+
+        <Text as="span" size="small" weight="medium" style={{ color: "#FF0080" }}>
+          {passage}
+        </Text>
+      </Stack>
+    </Flash>
+  );
+};
 export default function Home() {
   return (
     <>
@@ -43,6 +124,20 @@ export default function Home() {
             <Text as="span" weight="light" size="large" style={{ alignSelf: "center", color: "#8892B0" }}>
               Estamos construindo o futuro da leitura bíblica: imersiva, comunitária e profundamente fiel à Tradição.
             </Text>
+            <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
+              <Marquee pauseOnHover className="[--duration:40s]">
+                {firstRow.map((verse) => (
+                  <VerseCard key={verse.username} {...verse} />
+                ))}
+              </Marquee>
+              <Marquee reverse pauseOnHover className="[--duration:40s]">
+                {secondRow.map((verse) => (
+                  <VerseCard key={verse.username} {...verse} />
+                ))}
+              </Marquee>
+              <div className="from-[var(--bgColor-default)] pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r"></div>
+              <div className="from-[var(--bgColor-default)] pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l"></div>
+            </div>
             <Stack style={styles.quote}>
               <Text color="fg.default">
                 O{" "}
