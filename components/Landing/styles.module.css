@@ -1,0 +1,9 @@
+.quote {
+  margin: 0;
+  padding: clamp(12px, 2vw, 16px);
+  border-left: 4px solid var(--borderColor-attention-emphasis, #9e6a03);
+  border-radius: 10px;
+  background: var(--bgColor-attention-muted, rgba(187, 128, 9, 0.15));
+  font-style: italic;
+  min-width: 0;
+}
