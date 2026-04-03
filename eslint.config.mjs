@@ -50,6 +50,7 @@ export default defineConfig([
     plugins: { css },
     language: "css/css",
     extends: ["css/recommended"],
+    ignores: ["styles/globals.css"],
   },
   prettier,
 ]);
