@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect, useState } from "react";
 import { Label, Stack, Heading, Text, Flash } from "@primer/react";
 import { CodeOfConductIcon, FeedMergedIcon, FeedStarIcon } from "@primer/octicons-react";
 import { AuroraText } from "@/components/ui/aurora-text.tsx";
@@ -17,76 +16,127 @@ const styles = {
   },
 };
 
-const names = [
-  "Sofia",
-  "Sabrina",
-  "Fátima",
-  "Francisco",
-  "Renato",
-  "Lívia",
-  "Guilherme",
-  "Matheus",
-  "Bella",
-  "Emma",
-  "Lurdes",
-  "Silvio",
-  "Rafael",
-  "Susana",
-  "Silvana",
-  "Roberto",
-  "Ronaldo",
-  "Antônio",
-  "Allana",
-];
-
 const verses = [
   {
     verse:
-      '{{name}} disse-lhe: "De onde me conheces?" Jesus respondeu: "Antes que Felipe te chamasse, quando estavas debaixo da figueira, eu te vi."',
-    passage: "João 1,48",
+      "||Sabrina|| disse-lhe: 'De onde me conheces?' Jesus respondeu: 'Antes que Filipe te chamasse, quando estavas debaixo da figueira, eu te vi.'",
+    passage: "Evangelho de São João 1, 48",
   },
   {
-    verse: "Não tenhas. medo, {{name}}, pois eu te resgatei, chamei-te pelo teu nome, tu és meu!",
-    passage: "Isaías 43,1",
+    verse: "Não tenhas medo, ||Sofia||, pois eu te resgatei, chamei-te pelo teu nome, tu és meu!",
+    passage: "Isaías 43, 1",
   },
   {
     verse:
-      'Caminhando junto ao mar da Galileia, Jesus viu {{name}} e seu irmão. Estavam lançando as rede ao mar, pois eram pescadores. Jesus lhes disse: "Vinde após mim, e eu farei de vós pescadores de homens."',
-    passage: "João 4, 18-19",
+      "Caminhando junto ao mar da Galileia, Jesus viu ||Maria|| e seu irmão. Estavam lançando as redes ao mar, pois eram pescadores. Jesus lhes disse: 'Vinde após mim, e eu farei de vós pescadores de homens.'",
+    passage: "Evangelho de São Mateus 4, 18-19",
+  },
+  {
+    verse: "||José||, isso te escrevo para que não peques.",
+    passage: "Primeira Carta de São João 2, 1",
+  },
+  {
+    verse: "Não vos admireis, ||Ana||, se o mundo vos odeia.",
+    passage: "Primeira Carta de São João 3, 13",
+  },
+  {
+    verse:
+      "Bem-aventurado és tu, ||João||, quando vos injuriarem e perseguirem e, mentindo, disserem todo mal contra vós por causa de mim.",
+    passage: "Evangelho de São Mateus 5, 11",
+  },
+  {
+    verse:
+      "||Antônio||, quando orares, entra no teu quarto, fecha a porta e ora a teu Pai, que está em segredo. E teu Pai, que vê o que está em segredo, te retribuirá.",
+    passage: "Evangelho de São Mateus 6, 6",
+  },
+  {
+    verse:
+      "Então, ||Francisco|| lhe disse: 'Senhor, se és tu, manda-me ir sobre as águas até junto de ti.' Ele respondeu: 'Vem!' ||Francisco|| desceu do barco e começou a andar sobre as águas, em direção a Jesus.",
+    passage: "Evangelho de São Mateus 14, 28-29",
+  },
+  {
+    verse:
+      "Jesus, então, olhou bem para ||Pedro||, com amor, e disse-lhe: 'Uma só coisa te falta: vai, vende tudo o que tens, dá aos pobres e terás um tesouro no céu. Depois, vem e segue-me.'",
+    passage: "Evangelho de São Marcos 10, 21",
+  },
+  {
+    verse:
+      "Quando chegou ao lugar, Jesus olhou para cima e disse: '||Carlos||, desce depressa! Hoje eu devo ficar na tua casa.'",
+    passage: "Evangelho de São Lucas 19, 5",
+  },
+  {
+    verse:
+      "Depois de comerem, Jesus perguntou a ||Lucas||: '||Lucas||, tu me amas mais do que estes?' ||Lucas|| respondeu: 'Sim, Senhor, tu sabes que te amo.' Jesus disse-lhe: 'Apascenta meus cordeiros.'",
+    passage: "Evangelho de São João 21, 15",
+  },
+  {
+    verse:
+      "Enfim, ||Luiz||, fortalece-te no Senhor, no poder de sua força; reveste-te da armadura de Deus, para que possas resistir às ciladas do diabo.",
+    passage: "Carta de São Paulo aos Efésios 6, 10-11",
+  },
+  {
+    verse: "Vinde a mim, ||Paulo||, tu que estás cansado e carregado de fardos, e eu te darei descanso.",
+    passage: "Evangelho de São Mateus 11, 28",
+  },
+  {
+    verse: "Não tenhas medo, ||Gabriel||, pois agradou ao teu Pai dar-te o Reino.",
+    passage: "Evangelho de São Lucas 12, 32",
+  },
+  {
+    verse:
+      "Eu sou a videira, e tu, ||Luísa||, és o ramo. Aquele que permanece em mim, como eu nele, esse dá muito fruto; pois sem mim nada podes fazer.",
+    passage: "Evangelho de São João 15, 5",
+  },
+  {
+    verse:
+      "||Julia||, não tendes sido provada além do que é humanamente suportável. Deus é fiel e não permitirá que sejais provada acima de vossa força.",
+    passage: "Primeira Carta de São Paulo aos Coríntios 10, 13",
+  },
+  {
+    verse:
+      "Não tenhas medo, ||Marcos||, pois estou contigo; não te assustes, pois eu sou teu Deus. Eu te dou coragem, eu te ajudo e te sustento com a minha mão justiceira.",
+    passage: "Isaías 41, 10",
+  },
+  {
+    verse:
+      "Confia no Senhor de todo o teu coração, ||Davi||, e não te apoies em tua própria prudência: pensa nele em todos os teus caminhos, e ele conduzirá os teus passos.",
+    passage: "Provérbios 3, 5-6",
+  },
+  {
+    verse:
+      "||Adriana||, sê forte e corajosa! Não tenhas medo, nem te apavoreis diante deles. O Senhor, teu Deus, ele vai contigo e não te deixará, nem te abandonará.",
+    passage: "Deuteronômio 31, 6",
+  },
+  {
+    verse: "||Rafael||, eis que estou convosco todos os dias, até o fim dos tempos.",
+    passage: "Evangelho de São Mateus 28, 20",
   },
 ];
-
-const getRandomName = () => {
-  return names[Math.floor(Math.random() * names.length)];
-};
 
 const firstRow = verses.slice(0, verses.length / 2);
 const secondRow = verses.slice(verses.length / 2);
 const VerseCard = ({ verse, passage }) => {
-  const [randomName, setRandomName] = useState(null);
-
-  useEffect(() => {
-    setRandomName(getRandomName());
-  }, []);
-
-  const renderVerse = () => {
-    if (!randomName) return verse; // evita mismatch inicial
-
-    const parts = verse.split("{{name}}");
-
-    return parts.map((part, index) => (
-      <React.Fragment key={index}>
-        {part}
-        {index < parts.length - 1 && <span style={{ color: "#38bdf8", fontWeight: 600 }}>{randomName}</span>}
-      </React.Fragment>
-    ));
-  };
+  const parts = verse.split("||");
 
   return (
     <Flash>
       <Stack gap="condensed" style={{ width: 500, padding: "clamp(12px, 2vw, 16px)" }}>
         <Text as="p" size="medium" weight="light" style={{ color: "#8892B0" }}>
-          {renderVerse()}
+          {parts.map((part, index) =>
+            index % 2 === 1 ? (
+              <Text
+                key={index}
+                as="span"
+                size="medium"
+                weight="semibold"
+                style={{ color: "var(--bgColor-accent-emphasis)" }}
+              >
+                {part}
+              </Text>
+            ) : (
+              <React.Fragment key={index}>{part}</React.Fragment>
+            ),
+          )}
         </Text>
 
         <Text as="span" size="small" weight="medium" style={{ color: "#FF0080" }}>
@@ -96,6 +146,7 @@ const VerseCard = ({ verse, passage }) => {
     </Flash>
   );
 };
+
 export default function Home() {
   return (
     <>
@@ -125,12 +176,12 @@ export default function Home() {
               Estamos construindo o futuro da leitura bíblica: imersiva, comunitária e profundamente fiel à Tradição.
             </Text>
             <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-              <Marquee pauseOnHover className="[--duration:40s]">
+              <Marquee pauseOnHover className="[--duration:200s]">
                 {firstRow.map((verse) => (
                   <VerseCard key={verse.username} {...verse} />
                 ))}
               </Marquee>
-              <Marquee reverse pauseOnHover className="[--duration:40s]">
+              <Marquee reverse pauseOnHover className="[--duration:200s]">
                 {secondRow.map((verse) => (
                   <VerseCard key={verse.username} {...verse} />
                 ))}
