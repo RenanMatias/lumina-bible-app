@@ -1,0 +1,105 @@
+/* Configurações Globais */
+html,
+body,
+#__next {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #212830;
+  color: #f0f6fc;
+}
+
+body {
+  /* Mantém compatibilidade com variáveis do Primer React se existirem, senão usa o fallback */
+  background-color: var(--bgColor-default, #212830);
+  color: var(--fgColor-default, #f0f6fc);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/* Efeito de Estrelas ao Fundo */
+.stars {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(2px 2px at 130px 80px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 160px 120px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(2px 2px at 200px 60px, rgba(0, 229, 204, 0.6), transparent),
+    radial-gradient(1px 1px at 250px 150px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(2px 2px at 300px 40px, rgba(255, 77, 77, 0.4), transparent);
+  background-size: 350px 200px;
+  animation: twinkle 8s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Animações de Marquee (Substituindo classes do Tailwind) */
+.animate-marquee {
+  animation: marquee var(--duration, 40s) linear infinite;
+}
+
+.animate-marquee-vertical {
+  animation: marquee-vertical var(--duration, 40s) linear infinite;
+}
+
+/* Animação Aurora */
+.animate-aurora {
+  animation: aurora 8s ease-in-out infinite alternate;
+}
+
+/* --- KEYFRAMES --- */
+
+@keyframes twinkle {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap, 1rem)));
+  }
+}
+
+@keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--gap, 1rem)));
+  }
+}
+
+@keyframes aurora {
+  0% {
+    background-position: 0% 50%;
+    transform: rotate(-5deg) scale(0.9);
+  }
+  25% {
+    background-position: 50% 100%;
+    transform: rotate(5deg) scale(1.1);
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-3deg) scale(0.95);
+  }
+  75% {
+    background-position: 50% 0%;
+    transform: rotate(3deg) scale(1.05);
+  }
+  100% {
+    background-position: 0% 50%;
+    transform: rotate(-5deg) scale(0.9);
+  }
+}
