@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import { Stack, Heading, Text, PageLayout } from "@primer/react";
 
 async function fetchAPI(key) {
   const response = await fetch(key);
@@ -9,9 +10,15 @@ async function fetchAPI(key) {
 export default function StatusPage() {
   return (
     <>
-      <h1>Status</h1>
-      <UpdatedAt />
-      <DatabaseStatus />
+      <PageLayout>
+        <PageLayout.Content>
+          <Stack>
+            <Heading as="h1">Status</Heading>
+            <UpdatedAt />
+            <DatabaseStatus />
+          </Stack>
+        </PageLayout.Content>
+      </PageLayout>
     </>
   );
 }
@@ -27,7 +34,7 @@ function UpdatedAt() {
     updatedAtText = new Date(data.updated_at).toLocaleString("pt-BR");
   }
 
-  return <div>Última atualização: {updatedAtText}</div>;
+  return <Text>Última atualização: {updatedAtText}</Text>;
 }
 
 function DatabaseStatus() {
@@ -40,16 +47,16 @@ function DatabaseStatus() {
   if (!isLoading && data) {
     databaseStatusInformation = (
       <>
-        <div>Versão: {data.dependencies.database.version}</div>
-        <div>Conexões abertas: {data.dependencies.database.opened_connections}</div>
-        <div>Conexões máximas: {data.dependencies.database.max_connections}</div>
+        <Text>Versão: {data.dependencies.database.version}</Text>
+        <Text>Conexões abertas: {data.dependencies.database.opened_connections}</Text>
+        <Text>Conexões máximas: {data.dependencies.database.max_connections}</Text>
       </>
     );
   }
 
   return (
     <>
-      <h2>Database</h2>
+      <Heading variant="medium">Banco de Dados</Heading>
       {databaseStatusInformation}
     </>
   );
