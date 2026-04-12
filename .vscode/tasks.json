@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "npm: dev",
+      "type": "npm",
+      "icon": {
+        "id": "bug"
+      },
+      "script": "dev",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "group": "lumina",
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "npm: test:watch",
+      "type": "npm",
+      "icon": {
+        "id": "beaker"
+      },
+      "script": "test:watch",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "group": "lumina",
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run dev + test:watch",
+      "dependsOn": ["npm: dev", "npm: test:watch"]
+    }
+  ]
+}

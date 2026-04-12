@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run dev + test:watch",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["-e", "setInterval(() => {}, 1 << 30)"],
+      "preLaunchTask": "Run dev + test:watch"
+    }
+  ]
+}
