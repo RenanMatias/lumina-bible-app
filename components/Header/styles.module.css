@@ -1,0 +1,7 @@
+.header {
+  padding: 16px;
+  background-color: var(--bgColor-default, #0d1117);
+  color: var(--fgColor-default, #f0f6fc);
+  position: relative;
+  z-index: 10;
+}
