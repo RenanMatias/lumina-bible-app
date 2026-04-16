@@ -6,14 +6,27 @@ import styles from "./styles.module.css";
 
 export default function Footer() {
   return (
-    <Stack direction="vertical">
-      <Stack direction="horizontal" align="center">
+    <Stack
+      direction={{ narrow: "vertical", regular: "horizontal", wide: "horizontal" }}
+      align="center"
+      gap="spacious"
+      justify="center"
+    >
+      <Stack direction="horizontal" align="center" gap="condensed" className={styles.hideOnNarrow}>
         <Link href="/" aria-label="Voltar para a página inicial">
           <Image src="/brand/white.png" alt="Lumina Escritura Logo" width={42} height={32} className={styles.img} />
         </Link>
-        &copy; {new Date().getFullYear()} Lumina Escritura
+        <span className={styles.copy}>&copy; {new Date().getFullYear()} Lumina Escritura</span>
       </Stack>
-      <Stack>{/* Links */}</Stack>
+      <Stack>
+        <Link href="/status">Status</Link>
+      </Stack>
+      <Stack direction="horizontal" align="center" gap="condensed" className={styles.hideOnRegular}>
+        <Link href="/" aria-label="Voltar para a página inicial">
+          <Image src="/brand/white.png" alt="Lumina Escritura Logo" width={42} height={32} className={styles.img} />
+        </Link>
+        <span className={styles.copy}>&copy; {new Date().getFullYear()} Lumina Escritura</span>
+      </Stack>
     </Stack>
   );
 }

@@ -1,4 +1,25 @@
+.hideOnNarrow {
+  display: flex;
+}
+
+.hideOnRegular {
+  display: none;
+}
+
+@media (max-width: calc(48rem - 0.02px)) {
+  .hideOnNarrow {
+    display: none;
+  }
+  .hideOnRegular {
+    display: flex;
+  }
+}
+
 .img {
   filter: grayscale(100%) brightness(0.7);
   opacity: 0.9;
+}
+
+.copy {
+  color: var(--color-text-secondary, #6e7681);
 }
