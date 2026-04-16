@@ -1,17 +1,18 @@
-.hideOnNarrow {
-  display: flex;
+.brand {
+  order: 1;
 }
 
-.hideOnRegular {
-  display: none;
+.nav {
+  order: 2;
 }
 
 @media (max-width: calc(48rem - 0.02px)) {
-  .hideOnNarrow {
-    display: none;
+  .brand {
+    order: 2;
   }
-  .hideOnRegular {
-    display: flex;
+
+  .nav {
+    order: 1;
   }
 }
 
