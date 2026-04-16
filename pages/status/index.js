@@ -1,5 +1,6 @@
 import useSWR from "swr";
-import { Stack, Heading, Text, PageLayout } from "@primer/react";
+import { Stack, Heading, Text } from "@primer/react";
+import { MainTemplate } from "templates/MainTemplate/index.jsx";
 
 async function fetchAPI(key) {
   const response = await fetch(key);
@@ -9,17 +10,13 @@ async function fetchAPI(key) {
 
 export default function StatusPage() {
   return (
-    <>
-      <PageLayout>
-        <PageLayout.Content>
-          <Stack>
-            <Heading as="h1">Status</Heading>
-            <UpdatedAt />
-            <DatabaseStatus />
-          </Stack>
-        </PageLayout.Content>
-      </PageLayout>
-    </>
+    <MainTemplate>
+      <Stack>
+        <Heading as="h1">Status</Heading>
+        <UpdatedAt />
+        <DatabaseStatus />
+      </Stack>
+    </MainTemplate>
   );
 }
 
