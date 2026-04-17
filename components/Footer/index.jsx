@@ -22,6 +22,7 @@ export default function Footer() {
       align="center"
       gap="spacious"
       justify="center"
+      className={styles.footer}
     >
       <FooterBrand className={styles.brand} />
 
