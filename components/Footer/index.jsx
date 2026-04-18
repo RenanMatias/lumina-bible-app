@@ -22,11 +22,13 @@ export default function Footer() {
       align="center"
       gap="spacious"
       justify="center"
+      className={styles.footer}
     >
       <FooterBrand className={styles.brand} />
 
-      <Stack className={styles.nav}>
+      <Stack direction="horizontal" className={styles.nav}>
         <Link href="/status">Status</Link>
+        <Link href="/use-term">Termo de Uso</Link>
       </Stack>
     </Stack>
   );
