@@ -80,6 +80,7 @@ async function activateUserByUserId(userId) {
     "update:user",
     "read:scripture",
     "read:scripture:immersive_reading",
+    "create:ticket",
   ]);
   return activatedUser;
 }

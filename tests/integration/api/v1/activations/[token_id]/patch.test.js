@@ -125,6 +125,7 @@ describe("PATCH /api/v1/activations/[token_id]", () => {
         "update:user",
         "read:scripture",
         "read:scripture:immersive_reading",
+        "create:ticket",
       ]);
     });
 
