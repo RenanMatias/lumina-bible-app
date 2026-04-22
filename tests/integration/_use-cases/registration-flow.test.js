@@ -82,6 +82,7 @@ describe("Use case: Registration Flow (all seccessful)", () => {
       "update:user",
       "read:scripture",
       "read:scripture:immersive_reading",
+      "create:ticket",
     ]);
   });
 

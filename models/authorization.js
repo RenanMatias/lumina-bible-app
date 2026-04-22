@@ -26,6 +26,9 @@ const availableFeatures = [
   // SCRIPTURE
   "read:scripture",
   "read:scripture:immersive_reading",
+
+  // TICKET
+  "create:ticket",
 ];
 
 function can(user, feature, resource) {
