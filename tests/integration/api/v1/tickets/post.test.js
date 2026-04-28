@@ -118,36 +118,6 @@ describe("POST /api/v1/tickets", () => {
       });
     });
 
-    test("Without email", async () => {
-      const createdUser = await orchestrator.createUser();
-      const activatedUser = await orchestrator.activateUser(createdUser);
-      const sessionObject = await orchestrator.createSession(activatedUser);
-
-      const response = await fetch(`${webserver.origin}/api/v1/tickets`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: `session_id=${sessionObject.token}`,
-        },
-        body: JSON.stringify({
-          type: "bug",
-          subject: "Subject of the ticket",
-          message: "Message of the ticket",
-        }),
-      });
-
-      expect(response.status).toBe(400);
-
-      const responseBody = await response.json();
-
-      expect(responseBody).toEqual({
-        action: 'verifique se o campo "email".',
-        message: "O campo email é obrigatório.",
-        name: "ValidationError",
-        status_code: 400,
-      });
-    });
-
     test("valid", async () => {
       const createdUser = await orchestrator.createUser();
       const activatedUser = await orchestrator.activateUser(createdUser);

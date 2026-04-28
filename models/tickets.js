@@ -10,7 +10,7 @@ async function create(ticketInput) {
   return createdIssue;
 }
 
-function validateTicketInput({ type, subject, message, email }) {
+function validateTicketInput({ type, subject, message }) {
   if (!type || !VALID_TICKET_TYPES.includes(type)) {
     throw new ValidationError({
       message: "O campo type é obrigatório. Os valores aceitos são: bug, feature_request ou other.",
@@ -29,13 +29,6 @@ function validateTicketInput({ type, subject, message, email }) {
     throw new ValidationError({
       message: "O campo message é obrigatório.",
       action: 'verifique se o campo "message".',
-    });
-  }
-
-  if (!email) {
-    throw new ValidationError({
-      message: "O campo email é obrigatório.",
-      action: 'verifique se o campo "email".',
     });
   }
 }
