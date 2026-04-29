@@ -81,7 +81,7 @@ export default function StatusPage() {
             <TextInput name="email" autoCapitalize="none" block={true} defaultValue={state?.values?.email || ""} />
             {state?.field === "email" && <FormControl.Validation variant="error">{state.error}</FormControl.Validation>}
           </FormControl>
-          <Button type="submit" variant="primary" disabled={isPending} block={true}>
+          <Button type="submit" variant="primary" disabled={isPending} loading={isPending}>
             {isPending ? "Enviando..." : "Enviar"}
           </Button>
         </Stack>
