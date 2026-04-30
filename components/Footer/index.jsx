@@ -28,7 +28,8 @@ export default function Footer() {
 
       <Stack direction="horizontal" className={styles.nav}>
         <Link href="/status">Status</Link>
-        <Link href="/use-term">Termo de Uso</Link>
+        <Link href="/contato">Contato</Link>
+        <Link href="/termos-de-uso">Termos de Uso</Link>
       </Stack>
     </Stack>
   );

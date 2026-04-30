@@ -1,12 +1,12 @@
 import { Stack, Heading } from "@primer/react";
 import { MainTemplate } from "templates/MainTemplate/index.jsx";
 
-export default function StatusPage() {
+export default function TermsOfUse() {
   return (
     <MainTemplate>
       <Stack>
         <Heading as="h1" variant="large">
-          Termo de Uso e Privacidade
+          Termos de Uso e Privacidade
         </Heading>
         <span>Ao utilizar o Lumina Escritura você está de acordo com os seguintes termos:</span>
         <Mission /> {/* 1. Missão e Valor Concreto */}
