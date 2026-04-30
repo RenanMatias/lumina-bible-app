@@ -1,12 +1,12 @@
-import { Stack, Heading } from "@primer/react";
+import { Stack, Heading, Link } from "@primer/react";
 import { MainTemplate } from "templates/MainTemplate/index.jsx";
 
-export default function StatusPage() {
+export default function TermsOfUse() {
   return (
     <MainTemplate>
       <Stack>
         <Heading as="h1" variant="large">
-          Termo de Uso e Privacidade
+          Termos de Uso e Privacidade
         </Heading>
         <span>Ao utilizar o Lumina Escritura você está de acordo com os seguintes termos:</span>
         <Mission /> {/* 1. Missão e Valor Concreto */}
@@ -223,7 +223,8 @@ function Security() {
       <span>
         Se um usuário encontrar qualquer falha técnica ou vulnerabilidade que exponha dados de terceiros ou o
         funcionamento do sistema, ele assume o compromisso de agir com honestidade e reportar o problema de forma{" "}
-        <strong>privada</strong> ao e-mail: <code>seguranca@luminaescritura.com.br</code>.
+        <strong>privada</strong> através de nosso canal de contato através do{" "}
+        <Link href="/contato">formulário de contato</Link>.
       </span>
       <span>O Lumina Escritura se compromete a:</span>
       <ol>

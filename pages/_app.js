@@ -18,8 +18,10 @@ function MyApp({ Component, pageProps }) {
         }}
       >
         <div className="stars" data-astro-cid-j7pv25f6=""></div>
-        <Component {...pageProps} />
         <LightRays />
+        <div className="app-content">
+          <Component {...pageProps} />
+        </div>
       </BaseStyles>
     </ThemeProvider>
   );
