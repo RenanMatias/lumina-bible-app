@@ -1,34 +1,38 @@
 import { useActionState } from "react";
 import { Stack, Heading, FormControl, TextInput, Radio, RadioGroup, Textarea, Button, Banner } from "@primer/react";
+
 import { MainTemplate } from "templates/MainTemplate/index.jsx";
+import tickets from "models/tickets.js";
 
 async function contactAction(prevState, formData) {
-  const values = {
-    typeGroup: formData.get("typeGroup"),
+  const ticketObject = {
+    type: formData.get("typeGroup"),
     subject: formData.get("subject"),
     message: formData.get("message"),
     email: formData.get("email"),
   };
 
-  if (!values.typeGroup) {
-    return { error: "Tipo de contato é obrigatório", field: "typeGroup", values };
+  if (!ticketObject.type) {
+    return { error_message: "Tipo de contato é obrigatório", field: "typeGroup", values: ticketObject };
   }
 
-  if (!values.subject) {
-    return { error: "Assunto é obrigatório", field: "subject", values };
+  if (!ticketObject.subject) {
+    return { error_message: "Assunto é obrigatório", field: "subject", values: ticketObject };
   }
 
-  if (!values.message) {
-    return { error: "Mensagem é obrigatória", field: "message", values };
+  if (!ticketObject.message) {
+    return { error_message: "Mensagem é obrigatória", field: "message", values: ticketObject };
   }
 
-  console.log(values.email && !values.email.includes("@"));
-
-  if (values.email && !values.email.includes("@")) {
-    return { error: "E-mail inválido", field: "email", values };
+  if (ticketObject.email && !ticketObject.email.includes("@")) {
+    return { error_message: "E-mail inválido", field: "email", values: ticketObject };
   }
 
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  try {
+    await tickets.create(ticketObject);
+  } catch (error) {
+    return { error: true, message: error.message, values: ticketObject };
+  }
 
   return { success: true };
 }
@@ -43,43 +47,46 @@ export default function StatusPage() {
           <Heading as="h1" variant="large">
             Contato
           </Heading>
+          {state?.error && <Banner title={state?.message} variant="critical" />}
           {state?.success && <Banner title="Mensagem enviada com sucesso!" variant="success" />}
           <RadioGroup required name="typeGroup">
             <RadioGroup.Label>Tipo de Contato</RadioGroup.Label>
             <FormControl>
-              <Radio value="bug" defaultChecked={state?.values?.typeGroup === "bug"} />
+              <Radio value="bug" defaultChecked={state?.values?.type === "bug"} />
               <FormControl.Label>Bug</FormControl.Label>
             </FormControl>
             <FormControl>
-              <Radio value="feature_request" defaultChecked={state?.values?.typeGroup === "feature_request"} />
+              <Radio value="feature_request" defaultChecked={state?.values?.type === "feature_request"} />
               <FormControl.Label>Sugestão</FormControl.Label>
             </FormControl>
             <FormControl>
-              <Radio value="other" defaultChecked={state?.values?.typeGroup === "other"} />
+              <Radio value="other" defaultChecked={state?.values?.type === "other"} />
               <FormControl.Label>Outros</FormControl.Label>
             </FormControl>
             {state?.field === "typeGroup" && (
-              <FormControl.Validation variant="error">{state.error}</FormControl.Validation>
+              <FormControl.Validation variant="error">{state.error_message}</FormControl.Validation>
             )}
           </RadioGroup>
           <FormControl required>
             <FormControl.Label>Assunto</FormControl.Label>
             <TextInput block={true} name="subject" defaultValue={state?.values?.subject || ""} />
             {state?.field === "subject" && (
-              <FormControl.Validation variant="error">{state.error}</FormControl.Validation>
+              <FormControl.Validation variant="error">{state.error_message}</FormControl.Validation>
             )}
           </FormControl>
           <FormControl required>
             <FormControl.Label>Mensagem</FormControl.Label>
             <Textarea cols={60} block={true} name="message" defaultValue={state?.values?.message || ""} />
             {state?.field === "message" && (
-              <FormControl.Validation variant="error">{state.error}</FormControl.Validation>
+              <FormControl.Validation variant="error">{state.error_message}</FormControl.Validation>
             )}
           </FormControl>
           <FormControl>
             <FormControl.Label>Email</FormControl.Label>
             <TextInput name="email" autoCapitalize="none" block={true} defaultValue={state?.values?.email || ""} />
-            {state?.field === "email" && <FormControl.Validation variant="error">{state.error}</FormControl.Validation>}
+            {state?.field === "email" && (
+              <FormControl.Validation variant="error">{state.error_message}</FormControl.Validation>
+            )}
           </FormControl>
           <Button type="submit" variant="primary" disabled={isPending} loading={isPending}>
             {isPending ? "Enviando..." : "Enviar"}
