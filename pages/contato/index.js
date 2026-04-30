@@ -2,39 +2,71 @@ import { useActionState } from "react";
 import { Stack, Heading, FormControl, TextInput, Radio, RadioGroup, Textarea, Button, Banner } from "@primer/react";
 
 import { MainTemplate } from "templates/MainTemplate/index.jsx";
-import tickets from "models/tickets.js";
 
 async function contactAction(prevState, formData) {
-  const ticketObject = {
-    type: formData.get("typeGroup"),
-    subject: formData.get("subject"),
-    message: formData.get("message"),
-    email: formData.get("email"),
-  };
+  const ticketObject = buildTicketObject(formData);
+  const validationError = validateTicket(ticketObject);
 
-  if (!ticketObject.type) {
-    return { error_message: "Tipo de contato é obrigatório", field: "typeGroup", values: ticketObject };
+  if (validationError) {
+    return validationError;
   }
 
-  if (!ticketObject.subject) {
-    return { error_message: "Assunto é obrigatório", field: "subject", values: ticketObject };
+  return saveTicket(ticketObject);
+
+  function buildTicketObject(formData) {
+    return {
+      type: formData.get("typeGroup"),
+      subject: formData.get("subject"),
+      message: formData.get("message"),
+      email: formData.get("email"),
+    };
   }
 
-  if (!ticketObject.message) {
-    return { error_message: "Mensagem é obrigatória", field: "message", values: ticketObject };
+  function validateTicket(ticketObject) {
+    if (!ticketObject.type) {
+      return { error_message: "Tipo de contato é obrigatório", field: "typeGroup", values: ticketObject };
+    }
+
+    if (!ticketObject.subject) {
+      return { error_message: "Assunto é obrigatório", field: "subject", values: ticketObject };
+    }
+
+    if (!ticketObject.message) {
+      return { error_message: "Mensagem é obrigatória", field: "message", values: ticketObject };
+    }
+
+    if (ticketObject.email && !ticketObject.email.includes("@")) {
+      return { error_message: "E-mail inválido", field: "email", values: ticketObject };
+    }
+
+    return null;
   }
 
-  if (ticketObject.email && !ticketObject.email.includes("@")) {
-    return { error_message: "E-mail inválido", field: "email", values: ticketObject };
-  }
+  async function saveTicket(ticketObject) {
+    try {
+      const response = await fetch("/api/v1/tickets", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(ticketObject),
+      });
 
-  try {
-    await tickets.create(ticketObject);
-  } catch (error) {
-    return { error: true, message: error.message, values: ticketObject };
-  }
+      if (!response.ok) {
+        const errorObject = await response.json().catch(() => null);
 
-  return { success: true };
+        return {
+          error: true,
+          message: errorObject?.message || "Não foi possível enviar a mensagem.",
+          values: ticketObject,
+        };
+      }
+
+      return { success: true };
+    } catch (error) {
+      return { error: true, message: error.message, values: ticketObject };
+    }
+  }
 }
 
 export default function StatusPage() {
