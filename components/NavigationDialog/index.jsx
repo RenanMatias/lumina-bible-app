@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ActionList } from "@primer/react";
+import { ActionList, Stack } from "@primer/react";
 import { ArrowLeftIcon } from "@primer/octicons-react";
 import { Dialog, SkeletonText } from "@primer/react/experimental";
 
@@ -134,11 +134,13 @@ export default function NavigationDialog({ isOpen, onClose, returnFocusRef }) {
               </ActionList.LeadingVisual>
               Voltar
             </ActionList.Item>
-            {view.data.map((item) => (
-              <ActionList.Item key={item.key} onSelect={() => alert(`Capítulo ${item.name} selecionado`)}>
-                {item.name}
-              </ActionList.Item>
-            ))}
+            <Stack direction="horizontal" gap="condensed" wrap="wrap" align="center">
+              {currentViewState.items.map((option) => (
+                <ActionList.Item key={option.key} onSelect={() => alert(`Capítulo ${option.name} selecionado`)}>
+                  {option.name}
+                </ActionList.Item>
+              ))}
+            </Stack>
           </>
         ) : null}
       </ActionList>
