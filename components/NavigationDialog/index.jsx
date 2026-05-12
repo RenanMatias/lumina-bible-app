@@ -3,81 +3,81 @@ import { ActionList } from "@primer/react";
 import { ArrowLeftIcon } from "@primer/octicons-react";
 import { Dialog, SkeletonText } from "@primer/react/experimental";
 
-export default function BibleDialog({ isOpen, onClose, returnFocusRef }) {
-  const [allBooks, setAllBooks] = useState([]);
-  const [view, setView] = useState({ view: "testaments", data: [] });
-  const [testamentsView, setTestamentsView] = useState({ view: "testaments", data: [] });
-  const [booksView, setBooksView] = useState({ view: "books", data: [] });
-  const [isLoading, setIsLoading] = useState(true);
+export default function NavigationDialog({ isOpen, onClose, returnFocusRef }) {
+  const [bookMetadataList, setBookMetadataList] = useState([]);
+  const [currentViewState, setCurrentViewState] = useState({ level: "testaments", items: [] });
+  const [testamentsViewState, setTestamentsViewState] = useState({ level: "testaments", items: [] });
+  const [booksViewState, setBooksViewState] = useState({ level: "books", items: [] });
+  const [isNavigationLoading, setIsNavigationLoading] = useState(true);
 
-  const fetchBibleMetadata = async () => {
+  const loadBooksMetadata = async () => {
     const response = await fetch("/api/v1/scriptures/books?language=pt-br&version=cnbb");
     if (!response.ok) {
       console.error("Failed to fetch books metadata:", response.statusText);
       return;
     }
-    const books = await response.json();
-    setAllBooks(books);
+    const booksMetadata = await response.json();
+    setBookMetadataList(booksMetadata);
 
-    const testamentNames = [...new Set(books.map((book) => book.testament))];
-    const data = testamentNames.map((testament) => ({
+    const testamentNames = [...new Set(booksMetadata.map((book) => book.testament))];
+    const testamentActionItems = testamentNames.map((testament) => ({
       key: testament,
       name: testament,
     }));
-    const nextTestamentsView = { view: "testaments", data };
-    setTestamentsView(nextTestamentsView);
-    setView(nextTestamentsView);
+    const nextTestamentsViewState = { level: "testaments", items: testamentActionItems };
+    setTestamentsViewState(nextTestamentsViewState);
+    setCurrentViewState(nextTestamentsViewState);
   };
 
-  const openBooksByTestament = async (testamentName) => {
-    const data = allBooks
+  const showBooksByTestament = async (testamentName) => {
+    const bookActionItems = bookMetadataList
       .filter((book) => book.testament === testamentName)
       .map((book) => ({
         key: book.id,
         name: book.name,
       }));
 
-    const nextBookView = { view: "books", data, testamentName };
-    setBooksView(nextBookView);
-    setView(nextBookView);
+    const nextBooksViewState = { level: "books", items: bookActionItems, testamentName };
+    setBooksViewState(nextBooksViewState);
+    setCurrentViewState(nextBooksViewState);
   };
 
-  const openChaptersByBook = async (bookName) => {
-    const bookFound = allBooks.find((book) => book.name === bookName);
-    if (!bookFound) return;
+  const showChaptersByBook = async (bookName) => {
+    const selectedBookMetadata = bookMetadataList.find((book) => book.name === bookName);
+    if (!selectedBookMetadata) return;
 
-    const response = await fetch(`/api/v1/scriptures/books/${bookFound.id}`);
-    const responseBody = await response.json();
+    const response = await fetch(`/api/v1/scriptures/books/${selectedBookMetadata.id}`);
+    const bookDetails = await response.json();
 
-    const data = responseBody.chapters.map((chapter) => ({
+    const chapterActionItems = bookDetails.chapters.map((chapter) => ({
       key: chapter.id,
       name: chapter.number,
     }));
 
-    setView({ view: "chapters", data, bookName });
+    setCurrentViewState({ level: "chapters", items: chapterActionItems, bookName });
   };
 
-  const handleBack = () => {
-    if (view.view === "chapters") {
-      setView(booksView);
+  const handleBackNavigation = () => {
+    if (currentViewState.level === "chapters") {
+      setCurrentViewState(booksViewState);
       return;
     }
 
-    if (view.view === "books") {
-      setView(testamentsView);
+    if (currentViewState.level === "books") {
+      setCurrentViewState(testamentsViewState);
     }
   };
 
   useEffect(() => {
     if (!isOpen) return;
 
-    const load = async () => {
-      setIsLoading(true);
-      await fetchBibleMetadata();
-      setIsLoading(false);
+    const loadNavigationData = async () => {
+      setIsNavigationLoading(true);
+      await loadBooksMetadata();
+      setIsNavigationLoading(false);
     };
 
-    load();
+    loadNavigationData();
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -85,13 +85,19 @@ export default function BibleDialog({ isOpen, onClose, returnFocusRef }) {
   return (
     <Dialog
       title="Navegação da Bíblia"
-      subtitle="Edição CNBB"
+      subtitle={
+        currentViewState.level === "testaments"
+          ? "Edição CNBB"
+          : currentViewState.level === "books"
+            ? currentViewState.testamentName
+            : currentViewState.bookName
+      }
       width="medium"
       onClose={onClose}
       returnFocusRef={returnFocusRef}
     >
       <ActionList>
-        {isLoading ? (
+        {isNavigationLoading ? (
           <>
             <ActionList.Item disabled>
               <SkeletonText variant="text" width="160px" />
@@ -100,29 +106,29 @@ export default function BibleDialog({ isOpen, onClose, returnFocusRef }) {
               <SkeletonText variant="text" width="140px" />
             </ActionList.Item>
           </>
-        ) : view.view === "testaments" ? (
-          view.data.map((item) => (
-            <ActionList.Item key={item.key} onSelect={() => openBooksByTestament(item.name)}>
-              {item.name}
+        ) : currentViewState.level === "testaments" ? (
+          currentViewState.items.map((option) => (
+            <ActionList.Item key={option.key} onSelect={() => showBooksByTestament(option.name)}>
+              {option.name}
             </ActionList.Item>
           ))
-        ) : view.view === "books" ? (
+        ) : currentViewState.level === "books" ? (
           <>
-            <ActionList.Item variant="danger" key="back" onSelect={handleBack}>
+            <ActionList.Item variant="danger" key="back" onSelect={handleBackNavigation}>
               <ActionList.LeadingVisual>
                 <ArrowLeftIcon />
               </ActionList.LeadingVisual>
               Voltar
             </ActionList.Item>
-            {view.data.map((item) => (
-              <ActionList.Item key={item.key} onSelect={() => openChaptersByBook(item.name)}>
-                {item.name}
+            {currentViewState.items.map((option) => (
+              <ActionList.Item key={option.key} onSelect={() => showChaptersByBook(option.name)}>
+                {option.name}
               </ActionList.Item>
             ))}
           </>
-        ) : view.view === "chapters" ? (
+        ) : currentViewState.level === "chapters" ? (
           <>
-            <ActionList.Item variant="danger" key="back" onSelect={handleBack}>
+            <ActionList.Item variant="danger" key="back" onSelect={handleBackNavigation}>
               <ActionList.LeadingVisual>
                 <ArrowLeftIcon />
               </ActionList.LeadingVisual>
