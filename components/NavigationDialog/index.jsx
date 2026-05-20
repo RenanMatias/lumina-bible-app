@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ActionList, Stack } from "@primer/react";
-import { ArrowLeftIcon } from "@primer/octicons-react";
+import { ArrowLeftIcon, ListOrderedIcon } from "@primer/octicons-react";
 import { Dialog, SkeletonText } from "@primer/react/experimental";
 
 export default function NavigationDialog({ isOpen, onClose, returnFocusRef }) {
@@ -121,8 +121,13 @@ export default function NavigationDialog({ isOpen, onClose, returnFocusRef }) {
               Voltar
             </ActionList.Item>
             {currentViewState.items.map((option) => (
-              <ActionList.Item key={option.key} onSelect={() => showChaptersByBook(option.name)}>
+              <ActionList.Item key={option.key}>
                 {option.name}
+                <ActionList.TrailingAction
+                  label="Capítulos"
+                  icon={ListOrderedIcon}
+                  onClick={() => showChaptersByBook(option.name)}
+                />
               </ActionList.Item>
             ))}
           </>
