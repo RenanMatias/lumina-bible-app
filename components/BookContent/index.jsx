@@ -1,5 +1,5 @@
 import React from "react";
-import { Label, Stack, Heading, Text, Button } from "@primer/react";
+import { Breadcrumbs, Stack, Heading, Text, Button } from "@primer/react";
 import { SkeletonText } from "@primer/react/experimental";
 import { Literata } from "next/font/google";
 
@@ -17,9 +17,11 @@ export default function BookContent({ book }) {
   return (
     <>
       <Stack gap="spacious">
-        <Label variant="success" style={{ alignSelf: "start" }}>
-          {book?.testament ?? <SkeletonText />}
-        </Label>
+        <Breadcrumbs>
+          <Breadcrumbs.Item href="/biblia/">Bíblia</Breadcrumbs.Item>
+          <Breadcrumbs.Item href="/biblia/testamento/">{book?.testament ?? <SkeletonText />}</Breadcrumbs.Item>
+          <Breadcrumbs.Item selected>{book?.name ?? <SkeletonText />}</Breadcrumbs.Item>
+        </Breadcrumbs>
         <div className={`${styles.page} ${literata.variable}`}>
           <Stack>
             <Heading className={styles.title}>{book?.name ?? <SkeletonText width="50%" />}</Heading>
