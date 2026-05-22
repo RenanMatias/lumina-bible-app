@@ -11,7 +11,11 @@ export default function NavigationDialog({ isOpen, onClose, returnFocusRef }) {
   const [isNavigationLoading, setIsNavigationLoading] = useState(true);
 
   const loadBooksMetadata = async () => {
-    const response = await fetch("/api/v1/scriptures/books?language=pt-br&version=cnbb");
+    const params = new URLSearchParams({
+      language: "pt-br",
+      version: "Edições CNBB",
+    });
+    const response = await fetch(`/api/v1/scriptures/books?${params.toString()}`);
     if (!response.ok) {
       console.error("Failed to fetch books metadata:", response.statusText);
       return;
