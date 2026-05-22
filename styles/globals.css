@@ -1,8 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&display=swap");
-
-/* Configurações Globais */
 html,
-body,
 #__next {
   min-height: 100%;
   margin: 0;
@@ -12,25 +8,11 @@ body,
 }
 
 body {
-  /* Mantém compatibilidade com variáveis do Primer React se existirem, senão usa o fallback */
   background-color: var(--bgColor-default, #212830);
   color: var(--fgColor-default, #f0f6fc);
-  font-family:
-    "Literata",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Helvetica,
-    Arial,
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
-.app-content {
-  position: relative;
-  z-index: 1;
-}
-
-/* Efeito de Estrelas ao Fundo */
 .stars {
   position: fixed;
   top: 0;
@@ -49,12 +31,9 @@ body {
   background-size: 350px 200px;
   animation: twinkle 8s ease-in-out infinite alternate;
   pointer-events: none;
-  position: absolute;
-  inset: 0;
   z-index: 0;
 }
 
-/* Animações de Marquee (Substituindo classes do Tailwind) */
 .animate-marquee {
   animation: marquee var(--duration, 40s) linear infinite;
 }
@@ -63,7 +42,6 @@ body {
   animation: marquee-vertical var(--duration, 40s) linear infinite;
 }
 
-/* Animação Aurora */
 .animate-aurora {
   animation: aurora 8s ease-in-out infinite alternate;
 }
