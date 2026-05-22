@@ -125,14 +125,14 @@ export default function NavigationDialog({ isOpen, onClose, returnFocusRef }) {
               Voltar
             </ActionList.Item>
             {currentViewState.items.map((option) => (
-              <ActionList.Item key={option.key}>
+              <ActionList.LinkItem href={`/biblia/testamento/livro/${option.key}`} key={option.key}>
                 {option.name}
                 <ActionList.TrailingAction
                   label="Capítulos"
                   icon={ListOrderedIcon}
                   onClick={() => showChaptersByBook(option.name)}
                 />
-              </ActionList.Item>
+              </ActionList.LinkItem>
             ))}
           </>
         ) : currentViewState.level === "chapters" ? (
