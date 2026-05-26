@@ -19,7 +19,9 @@ export default function BookContent({ book }) {
       <Stack gap="spacious">
         <Breadcrumbs>
           <Breadcrumbs.Item href="/biblia/">Bíblia</Breadcrumbs.Item>
-          <Breadcrumbs.Item href="/biblia/testamento/">{book?.testament ?? <SkeletonText />}</Breadcrumbs.Item>
+          <Breadcrumbs.Item href={`/biblia/testamento/${testament}`}>
+            {book?.testament ?? <SkeletonText />}
+          </Breadcrumbs.Item>
           <Breadcrumbs.Item selected>{book?.name ?? <SkeletonText />}</Breadcrumbs.Item>
         </Breadcrumbs>
         <div className={`${styles.page} ${literata.variable}`}>

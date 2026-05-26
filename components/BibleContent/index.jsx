@@ -30,7 +30,7 @@ export default function BookContent({ content, error }) {
                     {testament}
                   </ActionList.GroupHeading>
                   {books.map(({ id, name }) => (
-                    <ActionList.LinkItem href={`/biblia/testamento/livro/${id}`} key={id}>
+                    <ActionList.LinkItem href={`/biblia/livro/${id}`} key={id}>
                       {name}
                     </ActionList.LinkItem>
                   ))}
