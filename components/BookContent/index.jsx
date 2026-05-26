@@ -14,6 +14,8 @@ const literata = Literata({
 });
 
 export default function BookContent({ book }) {
+  const testament = book?.testament === "Novo Testamento" ? "novo" : "antigo";
+
   return (
     <>
       <Stack gap="spacious">
