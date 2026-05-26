@@ -23,6 +23,8 @@ async function getAllBooks(language, version) {
       WHERE
         LOWER(language) = LOWER($1)
         AND LOWER(version) = LOWER($2)
+      ORDER BY
+        position_in_bible ASC
       ;`,
       values: [language, version],
     });
