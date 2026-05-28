@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading } from "@primer/react";
+import { Banner } from "@primer/react";
 
 import { MainTemplate } from "templates/MainTemplate/index.jsx";
 import BookContent from "components/BookContent/index.jsx";
@@ -9,8 +9,7 @@ export default function BookPage({ bookFounded, error }) {
   if (error) {
     return (
       <MainTemplate>
-        <Heading>Ocorreu um erro ao carregar o livro</Heading>
-        <p>{error.message}</p>
+        <Banner variant="critical" title="Livro não encontrado" description={error.message} />
       </MainTemplate>
     );
   }
