@@ -1,32 +1,7 @@
-.page {
-  --literata-body-size: clamp(1.06rem, 1rem + 0.28vw, 1.2rem);
-  --literata-body-leading: 1.78;
-  --literata-heading-size: clamp(2.15rem, 1.2rem + 2.2vw, 3.25rem);
-  --literata-heading-leading: 1.12;
-
-  font-family: var(--font-literata, Georgia, "Times New Roman", serif);
-  font-optical-sizing: auto;
-  font-kerning: normal;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-feature-settings:
-    "kern" 1,
-    "liga" 1,
-    "clig" 1,
-    "calt" 1,
-    "onum" 1;
-  color: #dce6f2;
-}
-
-.page * {
-  font-family: var(--font-literata, Georgia, "Times New Roman", serif);
-}
-
 .title {
   margin: 0;
-  font-size: var(--literata-heading-size);
-  line-height: var(--literata-heading-leading);
+  font-size: var(--literata-heading-size, 48px);
+  line-height: var(--literata-heading-leading, 1.12);
   font-weight: 520;
   letter-spacing: -0.01em;
   font-variation-settings:
@@ -37,8 +12,8 @@
 
 .summary {
   margin: 0;
-  font-size: var(--literata-body-size);
-  line-height: var(--literata-body-leading);
+  font-size: var(--literata-body-size, 14px);
+  line-height: var(--literata-body-leading, 1.78);
   font-weight: 420;
   letter-spacing: 0.002em;
   font-variation-settings:
@@ -48,8 +23,8 @@
 }
 
 .chaptersButton {
-  font-size: var(--literata-body-size);
-  line-height: var(--literata-body-leading);
+  font-size: var(--literata-body-size, 14px);
+  line-height: var(--literata-body-leading, 1.78);
   font-weight: 420;
   width: var(--base-size-64, 64px);
   letter-spacing: 0.002em;

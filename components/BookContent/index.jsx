@@ -1,17 +1,8 @@
 import React from "react";
 import { Breadcrumbs, Stack, Heading, Text, Button } from "@primer/react";
 import { SkeletonText } from "@primer/react/experimental";
-import { Literata } from "next/font/google";
 
 import styles from "./styles.module.css";
-
-const literata = Literata({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-  variable: "--font-literata",
-});
 
 export default function BookContent({ book }) {
   const testament = book?.testament === "Novo Testamento" ? "novo" : "antigo";
@@ -26,7 +17,7 @@ export default function BookContent({ book }) {
           </Breadcrumbs.Item>
           <Breadcrumbs.Item selected>{book?.name ?? <SkeletonText />}</Breadcrumbs.Item>
         </Breadcrumbs>
-        <div className={`${styles.page} ${literata.variable}`}>
+        <div className={"bible-reader-container"}>
           <Stack>
             <Heading className={styles.title}>{book?.name ?? <SkeletonText width="50%" />}</Heading>
             <Text as="p" className={styles.summary}>

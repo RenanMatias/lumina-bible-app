@@ -1,17 +1,8 @@
 import React from "react";
 import { Stack, Heading, Banner } from "@primer/react";
-import { Literata } from "next/font/google";
 
 import BookList from "../BookList/index.jsx";
 import styles from "./styles.module.css";
-
-const literata = Literata({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-  variable: "--font-literata",
-});
 
 export default function BookContent({ content, error }) {
   const groupedBooks = content.reduce((acc, { testament, id, name }) => {
@@ -22,7 +13,7 @@ export default function BookContent({ content, error }) {
 
   return (
     <Stack gap="spacious">
-      <div className={`${styles.page} ${literata.variable}`}>
+      <div className={"bible-reader-container"}>
         <Stack>
           <Heading as="h1" className={styles.title}>
             Índice

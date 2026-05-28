@@ -1,17 +1,7 @@
 import React from "react";
 import { Stack, Breadcrumbs, Banner } from "@primer/react";
-import { Literata } from "next/font/google";
 
 import BookList from "../BookList/index.jsx";
-import styles from "./styles.module.css";
-
-const literata = Literata({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-  variable: "--font-literata",
-});
 
 export default function TestamentContent({ type, content, error }) {
   const groupedBooks = content.reduce((acc, { testament, id, name }) => {
@@ -27,7 +17,7 @@ export default function TestamentContent({ type, content, error }) {
           <Breadcrumbs.Item href="/biblia/">Bíblia</Breadcrumbs.Item>
           <Breadcrumbs.Item selected>{type}</Breadcrumbs.Item>
         </Breadcrumbs>
-        <div className={`${styles.page} ${literata.variable}`}>
+        <div className={"bible-reader-container"}>
           <Stack>
             {error ? (
               <Banner aria-label="Critical" variant="critical" title="Error">
