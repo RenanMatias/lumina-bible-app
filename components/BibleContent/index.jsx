@@ -1,7 +1,8 @@
 import React from "react";
-import { ActionList, Stack, Heading, Banner } from "@primer/react";
+import { Stack, Heading, Banner } from "@primer/react";
 import { Literata } from "next/font/google";
 
+import BookList from "../BookList/index.jsx";
 import styles from "./styles.module.css";
 
 const literata = Literata({
@@ -31,20 +32,7 @@ export default function BookContent({ content, error }) {
               {error.message}
             </Banner>
           ) : (
-            Object.entries(groupedBooks).map(([testament, books]) => (
-              <div key={testament}>
-                <ActionList>
-                  <ActionList.GroupHeading as="h2" className={styles.h2}>
-                    {testament}
-                  </ActionList.GroupHeading>
-                  {books.map(({ id, name }) => (
-                    <ActionList.LinkItem href={`/biblia/livro/${id}`} key={id}>
-                      {name}
-                    </ActionList.LinkItem>
-                  ))}
-                </ActionList>
-              </div>
-            ))
+            <BookList books={groupedBooks} />
           )}
         </Stack>
       </div>

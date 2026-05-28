@@ -1,7 +1,8 @@
 import React from "react";
-import { ActionList, Stack, Breadcrumbs, Banner } from "@primer/react";
+import { Stack, Breadcrumbs, Banner } from "@primer/react";
 import { Literata } from "next/font/google";
 
+import BookList from "../BookList/index.jsx";
 import styles from "./styles.module.css";
 
 const literata = Literata({
@@ -21,11 +22,11 @@ export default function TestamentContent({ type, content, error }) {
 
   return (
     <>
-      <Breadcrumbs>
-        <Breadcrumbs.Item href="/biblia/">Bíblia</Breadcrumbs.Item>
-        <Breadcrumbs.Item selected>{type}</Breadcrumbs.Item>
-      </Breadcrumbs>
       <Stack gap="spacious">
+        <Breadcrumbs>
+          <Breadcrumbs.Item href="/biblia/">Bíblia</Breadcrumbs.Item>
+          <Breadcrumbs.Item selected>{type}</Breadcrumbs.Item>
+        </Breadcrumbs>
         <div className={`${styles.page} ${literata.variable}`}>
           <Stack>
             {error ? (
@@ -33,20 +34,7 @@ export default function TestamentContent({ type, content, error }) {
                 {error.message}
               </Banner>
             ) : (
-              Object.entries(groupedBooks).map(([testament, books]) => (
-                <div key={testament}>
-                  <ActionList>
-                    <ActionList.GroupHeading as="h2" className={styles.h2}>
-                      {testament}
-                    </ActionList.GroupHeading>
-                    {books.map(({ id, name }) => (
-                      <ActionList.LinkItem href={`/biblia/livro/${id}`} key={id}>
-                        {name}
-                      </ActionList.LinkItem>
-                    ))}
-                  </ActionList>
-                </div>
-              ))
+              <BookList books={groupedBooks} />
             )}
           </Stack>
         </div>
