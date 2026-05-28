@@ -1,5 +1,5 @@
 import React from "react";
-import { ActionList, Stack, Breadcrumbs, Text } from "@primer/react";
+import { ActionList, Stack, Breadcrumbs, Banner } from "@primer/react";
 import { Literata } from "next/font/google";
 
 import styles from "./styles.module.css";
@@ -13,7 +13,12 @@ const literata = Literata({
 });
 
 export default function TestamentContent({ type, content, error }) {
-  console.log(content);
+  const groupedBooks = content.reduce((acc, { testament, id, name }) => {
+    if (!acc[testament]) acc[testament] = [];
+    acc[testament].push({ id, name });
+    return acc;
+  }, {});
+
   return (
     <>
       <Breadcrumbs>
@@ -24,9 +29,11 @@ export default function TestamentContent({ type, content, error }) {
         <div className={`${styles.page} ${literata.variable}`}>
           <Stack>
             {error ? (
-              <Text as="p">{error.message}</Text>
+              <Banner aria-label="Critical" variant="critical" title="Error">
+                {error.message}
+              </Banner>
             ) : (
-              Object.entries(content).map(([testament, books]) => (
+              Object.entries(groupedBooks).map(([testament, books]) => (
                 <div key={testament}>
                   <ActionList>
                     <ActionList.GroupHeading as="h2" className={styles.h2}>

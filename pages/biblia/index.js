@@ -1,8 +1,8 @@
 import React from "react";
+import scripture from "models/scripture.js";
 
 import { MainTemplate } from "templates/MainTemplate/index.jsx";
 import BibleContent from "components/BibleContent/index.jsx";
-import scripture from "models/scripture.js";
 
 export default function BiblePage({ content, error }) {
   return (
@@ -14,15 +14,7 @@ export default function BiblePage({ content, error }) {
 
 export async function getStaticProps() {
   try {
-    const bibleData = await scripture.getAllBooks("pt-br", "Edições CNBB");
-
-    const booksByTestament = bibleData.reduce((acc, { testament, id, name }) => {
-      if (!acc[testament]) acc[testament] = [];
-
-      acc[testament].push({ id, name });
-
-      return acc;
-    }, {});
+    const booksByTestament = await scripture.findBooksByTestament("pt-br", "Edições CNBB");
 
     return {
       props: {
