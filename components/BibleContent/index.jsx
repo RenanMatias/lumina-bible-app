@@ -4,7 +4,7 @@ import { Stack, Heading, Banner } from "@primer/react";
 import BookList from "../BookList/index.jsx";
 import styles from "./styles.module.css";
 
-export default function BookContent({ content, error }) {
+export default function BibleContent({ content, error }) {
   const groupedBooks = content.reduce((acc, { testament, id, name }) => {
     if (!acc[testament]) acc[testament] = [];
     acc[testament].push({ id, name });
