@@ -141,8 +141,10 @@ function createBooksViewState(booksMetadata, testamentName) {
 }
 
 function createChaptersViewState(bookDetails, bookName) {
+  const bookId = bookDetails.id;
   const chapterActionItems = (bookDetails?.chapters ?? []).map((chapter) => ({
     key: chapter.id ?? `${bookName}-${chapter.number}`,
+    book_id: bookId,
     id: chapter.id,
     number: chapter.number,
   }));

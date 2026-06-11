@@ -18,6 +18,8 @@ body {
   --literata-body-leading: 1.78;
   --literata-heading-size: clamp(2.15rem, 1.2rem + 2.2vw, 3.25rem);
   --literata-heading-leading: 1.12;
+  --literata-subtitle-size: clamp(1.35rem, 1.1rem + 1.1vw, 1.9rem);
+  --literata-subtitle-leading: 1.35;
 
   font-family: var(--font-literata, Georgia, "Times New Roman", serif);
   font-optical-sizing: auto;

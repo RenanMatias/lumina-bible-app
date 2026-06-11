@@ -18,6 +18,7 @@ function BibleNavigationDialogView({
   onSelectChapter,
 }) {
   if (!isOpen) return null;
+  console.log(items);
 
   return (
     <Dialog title={title} subtitle={subtitle} width="medium" onClose={onClose} returnFocusRef={returnFocusRef}>
@@ -70,9 +71,13 @@ function BibleNavigationDialogView({
             </ActionList.Item>
             <Stack direction="horizontal" gap="condensed" wrap="wrap" align="center">
               {items.map((option) => (
-                <ActionList.Item key={option.key} onSelect={() => onSelectChapter(option)}>
+                <ActionList.LinkItem
+                  href={`/biblia/livro/${option.book_id}/${option.id}`}
+                  key={option.key}
+                  onSelect={() => onSelectChapter(option)}
+                >
                   {option.number}
-                </ActionList.Item>
+                </ActionList.LinkItem>
               ))}
             </Stack>
           </>
