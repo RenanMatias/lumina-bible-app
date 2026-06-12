@@ -18,15 +18,20 @@ async function getHandler(request, response) {
   }
 
   const bookObject = await scripture.findOneBookById(bookId);
-  const chaptersObject = await scripture.findOneChapterById(chapterId);
+  const chaptersObject = await scripture.getAllChaptersFromBook(bookId);
+  const chaptersData = chaptersObject.map(({ id, number }) => ({ id, number }));
 
-  delete chaptersObject.book_id;
-  chaptersObject.book = {
+  const chapterObject = await scripture.findOneChapterById(chapterId);
+
+  delete chapterObject.book_id;
+  chapterObject.book = {
     id: bookObject.id,
     short_name: bookObject.book,
     name: bookObject.name,
     testament: bookObject.testament,
     version: bookObject.version,
+    total_chapters: chaptersObject.length,
+    chapters: chaptersData,
   };
 
   const pericopesFound = await scripture.findPericopesByChapterId(chapterId);
@@ -40,7 +45,7 @@ async function getHandler(request, response) {
     });
   }
 
-  chaptersObject.pericopes = pericopesFound;
+  chapterObject.pericopes = pericopesFound;
 
-  return response.status(200).json(chaptersObject);
+  return response.status(200).json(chapterObject);
 }
