@@ -1,8 +1,9 @@
 import React from "react";
-import { Breadcrumbs, Stack, Heading, Text } from "@primer/react";
+import { Breadcrumbs, Stack, Heading, Text, Pagination } from "@primer/react";
 import { SkeletonText } from "@primer/react/experimental";
 
 import styles from "./styles.module.css";
+import { ChevronLeftIcon, ChevronRightIcon } from "@primer/octicons-react";
 
 export default function ChapterContent({ chapter }) {
   const testament = chapter?.book.testament === "Novo Testamento" ? "Novo Testamento" : "Antigo Testamento";
@@ -14,7 +15,12 @@ export default function ChapterContent({ chapter }) {
     return acc;
   }, []);
 
-  console.log(pericopes);
+  const handlePageChange = (event, page) => {
+    const selectedChapter = chapter?.book.chapters.find((c) => c.number === page);
+    if (selectedChapter) {
+      window.location.href = `/biblia/livro/${bookId}/${selectedChapter.id}`;
+    }
+  };
 
   return (
     <>
@@ -58,6 +64,46 @@ export default function ChapterContent({ chapter }) {
         <Text size="small" style={{ color: "var(--fgColor-disabled)", alignSelf: "end" }}>
           © {chapter?.book.version ?? <SkeletonText width="50%" />}. Todos os direitos reservados.
         </Text>
+        <Heading
+          as="h1"
+          style={{
+            letterSpacing: "-0.02em",
+            alignSelf: "center",
+            color: "var(--data-blue-color-emphasis)",
+          }}
+        >
+          Capítulos
+        </Heading>
+        <Pagination
+          pageCount={chapter?.book.total_chapters}
+          currentPage={chapter?.number}
+          onPageChange={handlePageChange}
+          renderPage={({ key, children, className, ...props }) => {
+            const Component = props.href ? "a" : "span";
+
+            if (key === "page-prev") {
+              return (
+                <Component key={key} className={className} {...props}>
+                  <ChevronLeftIcon /> Anterior
+                </Component>
+              );
+            }
+
+            if (key === "page-next") {
+              return (
+                <Component key={key} className={className} {...props}>
+                  Próximo <ChevronRightIcon />
+                </Component>
+              );
+            }
+
+            return (
+              <Component key={key} className={className} {...props}>
+                {children}
+              </Component>
+            );
+          }}
+        />
       </Stack>
     </>
   );

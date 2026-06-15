@@ -40,7 +40,6 @@ export default function ChapterPage() {
     async function fetchChapter() {
       const response = await fetch(`/api/v1/scriptures/books/${book_id}/${chapter_id}`);
       const responseBody = await response.json();
-      console.log(responseBody);
 
       if (response.ok) {
         setChapterFounded(responseBody);

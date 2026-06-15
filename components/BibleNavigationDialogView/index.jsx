@@ -18,7 +18,6 @@ function BibleNavigationDialogView({
   onSelectChapter,
 }) {
   if (!isOpen) return null;
-  console.log(items);
 
   return (
     <Dialog title={title} subtitle={subtitle} width="medium" onClose={onClose} returnFocusRef={returnFocusRef}>
