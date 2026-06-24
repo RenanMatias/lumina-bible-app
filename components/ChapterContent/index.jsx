@@ -6,7 +6,7 @@ import styles from "./styles.module.css";
 import { ChevronLeftIcon, ChevronRightIcon } from "@primer/octicons-react";
 
 export default function ChapterContent({ chapter }) {
-  const testament = chapter?.book.testament === "Novo Testamento" ? "Novo Testamento" : "Antigo Testamento";
+  const testament = chapter?.book.testament === "Novo Testamento" ? "novo" : "antigo";
   const chapterNumber = chapter?.number;
   const bookId = chapter?.book.id;
   const bookShortName = chapter?.book.short_name;
@@ -27,7 +27,9 @@ export default function ChapterContent({ chapter }) {
       <Stack gap="spacious">
         <Breadcrumbs>
           <Breadcrumbs.Item href="/biblia/">Bíblia</Breadcrumbs.Item>
-          <Breadcrumbs.Item href={`/biblia/testamento/${testament}`}>{testament ?? <SkeletonText />}</Breadcrumbs.Item>
+          <Breadcrumbs.Item href={`/biblia/testamento/${testament}`}>
+            {chapter?.book.testament ?? <SkeletonText />}
+          </Breadcrumbs.Item>
           <Breadcrumbs.Item href={`/biblia/livro/${bookId}`}>{bookShortName ?? <SkeletonText />}</Breadcrumbs.Item>
           <Breadcrumbs.Item selected>Capítulo {chapterNumber ?? <SkeletonText />}</Breadcrumbs.Item>
         </Breadcrumbs>
