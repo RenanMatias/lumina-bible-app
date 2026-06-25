@@ -23,6 +23,8 @@ async function getAllBooks(language, version) {
       WHERE
         LOWER(language) = LOWER($1)
         AND LOWER(version) = LOWER($2)
+      ORDER BY
+        position_in_bible ASC
       ;`,
       values: [language, version],
     });
@@ -241,6 +243,40 @@ function replaceVersePlaceholders(verse, userObject, immersiveReading) {
   return verse;
 }
 
+async function findBooksByTestament(language, version, testament = null) {
+  const booksFound = await runSelectQuery(language, version, testament);
+
+  return booksFound;
+
+  async function runSelectQuery(language, version, testament) {
+    const results = await database.query({
+      text: `
+        SELECT
+          testament, id, name
+        FROM
+          scripture_books
+        WHERE
+          LOWER(language) = LOWER($1)
+          AND LOWER(version) = LOWER($2)
+          ${testament ? "AND LOWER(testament) = LOWER($3)" : ""}
+        ORDER BY
+          position_in_bible ASC
+      ;`,
+      values: testament ? [language, version, testament] : [language, version],
+    });
+
+    if (results.rowCount === 0) {
+      throw new NotFoundError({
+        message: "Nenhum livro foi encontrado para os parâmetros de idioma, versão e testamento fornecidos.",
+        action:
+          "Verifique se os parâmetros de idioma, versão e testamento estão digitados corretamente e se existem livros cadastrados para esses parâmetros.",
+      });
+    }
+
+    return results.rows;
+  }
+}
+
 const scripture = {
   getAllBooks,
   findOneBookById,
@@ -250,6 +286,7 @@ const scripture = {
   findPericopesByChapterId,
   findVersesByPericopeId,
   replaceVersePlaceholders,
+  findBooksByTestament,
 };
 
 export default scripture;

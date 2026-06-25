@@ -53,10 +53,10 @@ async function runPendingMigrations() {
 async function seedScriptureDb() {
   const books = await database.query(`
     INSERT INTO 
-      scripture_books (language, version, testament, book, name, short_name, author)
+      scripture_books (language, version, testament, book, name, short_name, author, position_in_bible)
     VALUES
-      ('pt-br', 'cnbb', 'Novo Testamento', '1Jo', 'Primeira Carta de São João', '1 João', 'João'),
-      ('pt-br', 'cnbb', 'Novo Testamento', 'Jo', 'Evangelho de São João', 'João', 'João')
+      ('pt-br', 'cnbb', 'Novo Testamento', '1Jo', 'Primeira Carta de São João', '1 João', 'João', 1),
+      ('pt-br', 'cnbb', 'Novo Testamento', 'Jo', 'Evangelho de São João', 'João', 'João', 2)
     RETURNING
       *
     ;`);

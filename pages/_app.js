@@ -2,7 +2,6 @@ import "@primer/primitives/dist/css/functional/themes/light.css";
 import "@primer/primitives/dist/css/functional/themes/dark.css";
 import "@primer/primitives/dist/css/primitives.css";
 import { ThemeProvider, BaseStyles } from "@primer/react";
-import { LightRays } from "components/ui/light-rays.jsx";
 
 import "../styles/globals.css";
 
@@ -18,7 +17,6 @@ function MyApp({ Component, pageProps }) {
         }}
       >
         <div className="stars" data-astro-cid-j7pv25f6=""></div>
-        <LightRays />
         <div className="app-content">
           <Component {...pageProps} />
         </div>

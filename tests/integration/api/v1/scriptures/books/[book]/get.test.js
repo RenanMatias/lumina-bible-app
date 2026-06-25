@@ -45,6 +45,7 @@ describe("GET /api/v1/scriptures/books/[book]", () => {
         date_written: null,
         division: null,
         original_language: null,
+        position_in_bible: 1,
         summary: null,
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,

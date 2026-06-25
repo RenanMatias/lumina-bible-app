@@ -1,0 +1,11 @@
+.title {
+  margin: 0;
+  font-size: var(--literata-heading-size, 48px);
+  line-height: var(--literata-heading-leading, 1.12);
+  font-weight: 520;
+  letter-spacing: -0.01em;
+  font-variation-settings:
+    "opsz" 48,
+    "wght" 520;
+  color: #f5f9ff;
+}

@@ -69,7 +69,7 @@ async function contactAction(prevState, formData) {
   }
 }
 
-export default function StatusPage() {
+export default function ContactPage() {
   const [state, contactForm, isPending] = useActionState(contactAction, {});
 
   return (
