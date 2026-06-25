@@ -28,7 +28,7 @@ export default function BookPage() {
   const router = useRouter();
   const { book_id } = router.query;
 
-  const [bookFounded, setBookFOunded] = useState(null);
+  const [bookFound, setBookFound] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -42,7 +42,7 @@ export default function BookPage() {
       const responseBody = await response.json();
 
       if (response.ok) {
-        setBookFOunded(responseBody);
+        setBookFound(responseBody);
       } else {
         setError(responseBody);
       }
@@ -56,7 +56,7 @@ export default function BookPage() {
 
       {!loading && error && <Banner variant="critical" title={error.message} description={error.action} />}
 
-      {!loading && bookFounded && <BookContent book={bookFounded} />}
+      {!loading && bookFound && <BookContent book={bookFound} />}
     </MainTemplate>
   );
 }
