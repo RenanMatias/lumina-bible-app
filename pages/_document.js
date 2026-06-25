@@ -1,6 +1,5 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
-import "../styles/globals.css";
 import { literata, inter } from "../styles/fonts.js";
 
 export default function Document() {
