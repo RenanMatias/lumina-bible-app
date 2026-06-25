@@ -36,22 +36,22 @@ export default function ChapterContent({ chapter }) {
         <div className={"bible-reader-container"}>
           <Stack>
             {pericopes?.length ? (
-              pericopes.map(({ title, verses }) => (
-                <>
+              pericopes.map(({ title, verses }, pericopeIndex) => (
+                <React.Fragment key={`${pericopeIndex}-${title ?? "pericope"}`}>
                   <Heading className={styles.pericope}>{title}</Heading>
                   <div className={styles.verseContainer}>
                     {verses.map(({ number, text }) => (
-                      <>
+                      <React.Fragment key={number}>
                         <Text as="span" className={styles.verseNumber}>
                           {number}
                         </Text>
                         <Text as="span" className={styles.verseText}>
                           {text}
                         </Text>
-                      </>
+                      </React.Fragment>
                     ))}
                   </div>
-                </>
+                </React.Fragment>
               ))
             ) : (
               <>
