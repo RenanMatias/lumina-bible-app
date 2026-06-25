@@ -1,6 +1,7 @@
 import controller from "infra/controller";
 import { createRouter } from "next-connect";
 import scripture from "models/scripture.js";
+import { NotFoundError } from "infra/errors.js";
 
 export default createRouter()
   .use(controller.injectAnonymousOrUser)
@@ -22,6 +23,13 @@ async function getHandler(request, response) {
   const chaptersData = chaptersObject.map(({ id, number }) => ({ id, number }));
 
   const chapterObject = await scripture.findOneChapterById(chapterId);
+
+  if (String(chapterObject.book_id) !== String(bookObject.id)) {
+    throw new NotFoundError({
+      message: "O capítulo solicitado não pertence ao livro informado.",
+      action: "Verifique se este capítulo pertence ao livro correto.",
+    });
+  }
 
   delete chapterObject.book_id;
   chapterObject.book = {
