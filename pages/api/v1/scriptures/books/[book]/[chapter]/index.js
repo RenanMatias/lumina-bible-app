@@ -47,9 +47,9 @@ async function getHandler(request, response) {
   for (const pericope of pericopesFound) {
     const versesFound = await scripture.findVersesByPericopeId(pericope.id);
 
-    pericope.verses = versesFound.map(({ number, verse }) => {
+    pericope.verses = versesFound.map(({ paragraph, number, verse }) => {
       verse = scripture.replaceVersePlaceholders(verse, userTryingToGet, immersiveReading);
-      return { number: parseInt(number), text: verse };
+      return { paragraph, number: parseInt(number), text: verse };
     });
   }
 
