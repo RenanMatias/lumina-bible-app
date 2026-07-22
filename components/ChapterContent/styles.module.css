@@ -36,3 +36,8 @@
   font-size: var(--literata-body-size, 14px);
   line-height: var(--literata-body-leading, 1.78);
 }
+
+.verseParagraph {
+  margin: 0;
+  text-indent: 2em;
+}

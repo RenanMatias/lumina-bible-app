@@ -5,6 +5,63 @@ import { SkeletonText } from "@primer/react/experimental";
 import styles from "./styles.module.css";
 import { ChevronLeftIcon, ChevronRightIcon } from "@primer/octicons-react";
 
+function sanitizeVerseHtml(rawText) {
+  if (typeof rawText !== "string") {
+    return "";
+  }
+
+  if (typeof window === "undefined") {
+    return rawText;
+  }
+
+  const allowedTags = new Set(["I", "EM", "B", "STRONG", "U", "BR", "SUP", "SUB"]);
+  const blockedTags = new Set(["SCRIPT", "STYLE", "IFRAME", "OBJECT", "EMBED", "LINK", "META"]);
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(rawText, "text/html");
+
+  const sanitizeNode = (node) => {
+    const children = Array.from(node.childNodes);
+
+    for (const child of children) {
+      if (child.nodeType === 8) {
+        child.remove();
+        continue;
+      }
+
+      if (child.nodeType !== 1) {
+        continue;
+      }
+
+      if (blockedTags.has(child.tagName)) {
+        child.remove();
+        continue;
+      }
+
+      if (!allowedTags.has(child.tagName)) {
+        const fragment = doc.createDocumentFragment();
+
+        while (child.firstChild) {
+          fragment.appendChild(child.firstChild);
+        }
+
+        child.replaceWith(fragment);
+        sanitizeNode(node);
+        continue;
+      }
+
+      while (child.attributes.length > 0) {
+        child.removeAttribute(child.attributes[0].name);
+      }
+
+      sanitizeNode(child);
+    }
+  };
+
+  sanitizeNode(doc.body);
+  return doc.body.innerHTML;
+}
+
 export default function ChapterContent({ chapter }) {
   const testamentName = chapter?.book.testament;
   const testamentSlug =
@@ -22,6 +79,17 @@ export default function ChapterContent({ chapter }) {
     acc.push({ title, verses });
     return acc;
   }, []);
+
+  const groupedVerses = pericopes.map(({ title, verses }) => ({
+    title,
+    verses: verses.reduce((acc, { paragraph, number, text }) => {
+      if (!acc[paragraph]) {
+        acc[paragraph] = [];
+      }
+      acc[paragraph].push({ number, text });
+      return acc;
+    }, {}),
+  }));
 
   const handlePageChange = (event, page) => {
     const selectedChapter = chapter?.book.chapters.find((c) => c.number === page);
@@ -44,19 +112,28 @@ export default function ChapterContent({ chapter }) {
         <div className={"bible-reader-container"}>
           <Stack>
             {pericopes?.length ? (
-              pericopes.map(({ title, verses }, pericopeIndex) => (
+              pericopes.map(({ title }, pericopeIndex) => (
                 <React.Fragment key={`${pericopeIndex}-${title ?? "pericope"}`}>
                   <Heading className={styles.pericope}>{title}</Heading>
                   <div className={styles.verseContainer}>
-                    {verses.map(({ number, text }) => (
-                      <React.Fragment key={number}>
-                        <Text as="span" className={styles.verseNumber}>
-                          {number}
-                        </Text>
-                        <Text as="span" className={styles.verseText}>
-                          {text}
-                        </Text>
-                      </React.Fragment>
+                    {Object.entries(groupedVerses[pericopeIndex].verses).map(([paragraph, paragraphVerses]) => (
+                      <p key={paragraph} className={styles.verseParagraph}>
+                        {paragraphVerses.map(({ number, text }) => (
+                          <React.Fragment key={number}>
+                            <Text as="span" className={styles.verseNumber}>
+                              {" "}
+                              {number}
+                            </Text>
+                            <Text as="span" className={styles.verseText}>
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: sanitizeVerseHtml(text),
+                                }}
+                              />
+                            </Text>
+                          </React.Fragment>
+                        ))}
+                      </p>
                     ))}
                   </div>
                 </React.Fragment>
