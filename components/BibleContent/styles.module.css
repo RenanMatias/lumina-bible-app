@@ -7,5 +7,5 @@
   font-variation-settings:
     "opsz" 48,
     "wght" 520;
-  color: #f5f9ff;
+  color: var(--fgColor-default, #000);
 }
