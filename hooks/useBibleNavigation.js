@@ -3,7 +3,7 @@ import { ValidationError } from "../infra/errors.js";
 
 const INITIAL_VIEW_STATE = { level: "testaments", items: [] };
 
-function useBibleNavigation({ isOpen, language = "pt-br", version = "Edições CNBB" } = {}) {
+function useBibleNavigation({ isOpen, language = "pt-br", version = "Ave Maria" } = {}) {
   const [bookMetadataList, setBookMetadataList] = useState([]);
   const [currentViewState, setCurrentViewState] = useState(INITIAL_VIEW_STATE);
   const [testamentsViewState, setTestamentsViewState] = useState(INITIAL_VIEW_STATE);

@@ -1,18 +1,3 @@
-html,
-#__next {
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #212830;
-  color: #f0f6fc;
-}
-
-body {
-  background-color: var(--bgColor-default, #212830);
-  color: var(--fgColor-default, #f0f6fc);
-  font-family: var(--font-inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif);
-}
-
 .bible-reader-container {
   --literata-body-size: clamp(1.06rem, 1rem + 0.28vw, 1.2rem);
   --literata-body-leading: 1.78;
@@ -42,14 +27,14 @@ body {
   bottom: 0;
   left: 0;
   background-image:
-    radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.8), transparent),
-    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.5), transparent),
-    radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.6), transparent),
-    radial-gradient(2px 2px at 130px 80px, rgba(255, 255, 255, 0.4), transparent),
-    radial-gradient(1px 1px at 160px 120px, rgba(255, 255, 255, 0.7), transparent),
-    radial-gradient(2px 2px at 200px 60px, rgba(0, 229, 204, 0.6), transparent),
-    radial-gradient(1px 1px at 250px 150px, rgba(255, 255, 255, 0.5), transparent),
-    radial-gradient(2px 2px at 300px 40px, rgba(255, 77, 77, 0.4), transparent);
+    radial-gradient(2px 2px at 20px 30px, var(--color-scale-white-alpha-8, rgba(255, 255, 255, 0.8)), transparent),
+    radial-gradient(2px 2px at 40px 70px, var(--color-scale-white-alpha-5, rgba(255, 255, 255, 0.5)), transparent),
+    radial-gradient(1px 1px at 90px 40px, var(--color-scale-white-alpha-6, rgba(255, 255, 255, 0.6)), transparent),
+    radial-gradient(2px 2px at 130px 80px, var(--color-scale-white-alpha-4, rgba(255, 255, 255, 0.4)), transparent),
+    radial-gradient(1px 1px at 160px 120px, var(--color-scale-white-alpha-7, rgba(255, 255, 255, 0.7)), transparent),
+    radial-gradient(2px 2px at 200px 60px, var(--color-scale-teal-3, #00e5cc), transparent),
+    radial-gradient(1px 1px at 250px 150px, var(--color-scale-white-alpha-5, rgba(255, 255, 255, 0.5)), transparent),
+    radial-gradient(2px 2px at 300px 40px, var(--color-scale-red-4, #ff4d4d), transparent);
   background-size: 350px 200px;
   animation: twinkle 8s ease-in-out infinite alternate;
   pointer-events: none;

@@ -27,7 +27,7 @@ export default function VerseCard({ verse, passage }) {
           )}
         </Text>
 
-        <Text as="span" size="small" weight="medium" style={{ color: "#FF0080" }}>
+        <Text as="span" size="small" weight="medium" style={{ color: "var(--fgColor-closed)" }}>
           {passage}
         </Text>
       </Stack>

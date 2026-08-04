@@ -21,7 +21,7 @@ export default function Header() {
       <PageHeader role="banner" aria-label="Title" className={styles.header}>
         <PageHeader.TitleArea>
           <PageHeader.LeadingVisual>
-            <Image src="/brand/white.png" alt="Lumina Escritura Logo" width={42} height={32} />
+            <Image src="/brand/black.png" alt="Lumina Escritura Logo" width={42} height={32} />
           </PageHeader.LeadingVisual>
           <PageHeader.Title hidden={{ narrow: true, regular: false, wide: false }}>Lumina Escritura</PageHeader.Title>
         </PageHeader.TitleArea>

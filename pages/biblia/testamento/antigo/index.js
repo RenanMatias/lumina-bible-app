@@ -14,7 +14,7 @@ export default function TestamentPage({ content, error }) {
 
 export async function getStaticProps() {
   try {
-    const booksByTestament = await scripture.findBooksByTestament("pt-br", "Edições CNBB", "Antigo Testamento");
+    const booksByTestament = await scripture.findBooksByTestament("pt-br", "Ave Maria", "Antigo Testamento");
 
     return {
       props: {
