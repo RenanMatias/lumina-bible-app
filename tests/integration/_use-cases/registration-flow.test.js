@@ -57,7 +57,7 @@ describe("Use case: Registration Flow (all seccessful)", () => {
 
     activationTokenId = await orchestrator.extractUUID(lastEmail.text);
 
-    expect(lastEmail.text).toContain(`${webserver.origin}/register/activate/${activationTokenId}`);
+    expect(lastEmail.text).toContain(`${webserver.origin}/cadastro/ativar/${activationTokenId}`);
 
     const activationTokenObject = await activation.findOneValidById(activationTokenId);
 

@@ -115,7 +115,7 @@ async function sendEmailToUser(user, activationToken) {
     subject: "Ative seu cadastro no Lumina Escritura!",
     text: `${user.username}, clique no link abaixo para ativar o seu cadastro no Lumina Escritura:
 
-${webserver.origin}/register/activate/${activationToken.id}
+${webserver.origin}/cadastro/ativar/${activationToken.id}
 
 Atenciosamente,
 Equipe Lumina`,
