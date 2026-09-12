@@ -1,6 +1,6 @@
 import Head from "next/head";
-import { PageLayout, Header, Text } from "@primer/react";
-import styles from "./indes.module.css";
+import { PageLayout, Header, Text, Stack, Link } from "@primer/react";
+import styles from "./index.module.css";
 
 const contentWidthClasses = {
   small: styles.smallContent,
@@ -32,7 +32,12 @@ export default function DefaultLayout({ children, metadata = {}, contentWidth })
           {children}
         </PageLayout.Content>
         <PageLayout.Footer divider="line">
-          <Text size="small">© {new Date().getFullYear()} Lumina Escritura</Text>
+          <Stack direction="horizontal" justify="center" className={styles.nav}>
+            <Text size="small">© {new Date().getFullYear()} Lumina Escritura</Text>
+            <Link href="/status">Status</Link>
+            <Link href="/contato">Contato</Link>
+            <Link href="/termos-de-uso">Termos de Uso</Link>
+          </Stack>
         </PageLayout.Footer>
       </PageLayout>
     </>

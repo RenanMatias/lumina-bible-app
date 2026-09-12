@@ -6,6 +6,7 @@ export default function App({ Component, pageProps }) {
   return (
     <ThemeProvider>
       <BaseStyles>
+        <div data-astro-cid-j7pv25f6=""></div>
         <Component {...pageProps} />
       </BaseStyles>
     </ThemeProvider>

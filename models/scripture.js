@@ -231,7 +231,7 @@ function replaceImmersivePlaceholders(verse, userObject, immersiveReading) {
       const imersiveTextIsKey = Object.hasOwn(keysToReplace, immersiveText);
       if (imersiveTextIsKey) {
         const replacementValue = keysToReplace[immersiveText];
-        verse = verse.replace(text, replacementValue);
+        verse = verse.replace(text, replacementValue ?? defaultText);
       } else {
         verse = verse.replace(text, immersiveText);
       }
