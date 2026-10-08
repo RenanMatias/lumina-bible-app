@@ -1,9 +1,9 @@
 import { Stack, Heading, Link } from "@primer/react";
-import { MainTemplate } from "templates/MainTemplate/index.jsx";
+import DefaultLayout from "interface/DefaultLayout";
 
 export default function TermsOfUse() {
   return (
-    <MainTemplate>
+    <DefaultLayout>
       <Stack>
         <Heading as="h1" variant="large">
           Termos de Uso e Privacidade
@@ -29,7 +29,7 @@ export default function TermsOfUse() {
         <JurisdictionLaw /> {/* 18. Foro e Legislação Aplicável */}
         <Changes /> {/* 19. Alterações nos Termos de Uso */}
       </Stack>
-    </MainTemplate>
+    </DefaultLayout>
   );
 }
 

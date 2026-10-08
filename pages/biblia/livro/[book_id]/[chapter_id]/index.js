@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Banner } from "@primer/react";
 import { SkeletonBox, SkeletonText } from "@primer/react/experimental";
 
-import { MainTemplate } from "templates/MainTemplate/index.jsx";
+import DefaultLayout from "interface/DefaultLayout";
 import ChapterContent from "components/ChapterContent/index.jsx";
 
 function ChapterSkeleton() {
@@ -51,12 +51,12 @@ export default function ChapterPage() {
   }, [book_id, chapter_id]);
 
   return (
-    <MainTemplate>
+    <DefaultLayout>
       {loading && <ChapterSkeleton />}
 
       {!loading && error && <Banner variant="critical" title={error.message} description={error.action} />}
 
       {!loading && chapterFounded && <ChapterContent chapter={chapterFounded} />}
-    </MainTemplate>
+    </DefaultLayout>
   );
 }

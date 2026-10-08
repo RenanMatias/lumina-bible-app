@@ -1,7 +1,7 @@
 import { useActionState } from "react";
 import { Stack, Heading, FormControl, TextInput, Radio, RadioGroup, Textarea, Button, Banner } from "@primer/react";
 
-import { MainTemplate } from "templates/MainTemplate/index.jsx";
+import DefaultLayout from "interface/DefaultLayout";
 
 async function contactAction(prevState, formData) {
   const ticketObject = buildTicketObject(formData);
@@ -73,7 +73,7 @@ export default function ContactPage() {
   const [state, contactForm, isPending] = useActionState(contactAction, {});
 
   return (
-    <MainTemplate>
+    <DefaultLayout>
       <form action={contactForm}>
         <Stack>
           <Heading as="h1" variant="large">
@@ -125,6 +125,6 @@ export default function ContactPage() {
           </Button>
         </Stack>
       </form>
-    </MainTemplate>
+    </DefaultLayout>
   );
 }

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Banner } from "@primer/react";
 import { SkeletonBox, SkeletonText } from "@primer/react/experimental";
 
-import { MainTemplate } from "templates/MainTemplate/index.jsx";
+import DefaultLayout from "interface/DefaultLayout";
 import BookContent from "components/BookContent/index.jsx";
 
 function BookSkeleton() {
@@ -51,12 +51,12 @@ export default function BookPage() {
   }, [book_id]);
 
   return (
-    <MainTemplate>
+    <DefaultLayout>
       {loading && <BookSkeleton />}
 
       {!loading && error && <Banner variant="critical" title={error.message} description={error.action} />}
 
       {!loading && bookFound && <BookContent book={bookFound} />}
-    </MainTemplate>
+    </DefaultLayout>
   );
 }

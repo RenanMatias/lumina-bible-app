@@ -1,14 +1,14 @@
 import React from "react";
 import scripture from "models/scripture.js";
 
-import { MainTemplate } from "templates/MainTemplate/index.jsx";
+import DefaultLayout from "interface/DefaultLayout";
 import BibleContent from "components/BibleContent/index.jsx";
 
 export default function BiblePage({ content, error }) {
   return (
-    <MainTemplate>
+    <DefaultLayout>
       <BibleContent content={content} error={error} />
-    </MainTemplate>
+    </DefaultLayout>
   );
 }
 

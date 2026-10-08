@@ -1,14 +1,14 @@
 import React from "react";
 
-import { MainTemplate } from "templates/MainTemplate/index.jsx";
+import DefaultLayout from "interface/DefaultLayout";
 import TestamentContent from "components/TestamentContent/index.jsx";
 import scripture from "models/scripture.js";
 
 export default function TestamentPage({ content, error }) {
   return (
-    <MainTemplate>
+    <DefaultLayout>
       <TestamentContent type="Novo Testamento" content={content} error={error} />
-    </MainTemplate>
+    </DefaultLayout>
   );
 }
 
