@@ -207,7 +207,7 @@ async function findVersesByPericopeId(pericopeId) {
   }
 }
 
-function replaceVersePlaceholders(verse, userObject, immersiveReading) {
+function replaceImmersivePlaceholders(verse, userObject, immersiveReading) {
   const keysToReplace = { name: userObject.firstname, hide: "" };
   const placeholderRegex = /\{\{(.*?)\}\}/g;
   const textsToFormat = verse.match(placeholderRegex);
@@ -285,7 +285,7 @@ const scripture = {
   findOneChapterById,
   findPericopesByChapterId,
   findVersesByPericopeId,
-  replaceVersePlaceholders,
+  replaceImmersivePlaceholders,
   findBooksByTestament,
 };
 

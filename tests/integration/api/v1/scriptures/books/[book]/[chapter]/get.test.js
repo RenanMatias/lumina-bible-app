@@ -207,7 +207,7 @@ describe("GET /api/v1/scriptures/books/[book]/[chapter]", () => {
             {
               id: responseBody.pericopes[0].id,
               chapter_id: chapter.id,
-              title: "Title Pericope",
+              title: `Title ${createdUser.firstname}`,
               verses: [
                 { paragraph: 1, number: 1, text: `text ${createdUser.firstname} text ${createdUser.firstname} text` },
                 { paragraph: 1, number: 2, text: "text ti text" },
@@ -270,7 +270,7 @@ describe("GET /api/v1/scriptures/books/[book]/[chapter]", () => {
             {
               id: responseBody.pericopes[0].id,
               chapter_id: chapter.id,
-              title: "Title Pericope",
+              title: `Title ${createdUser.firstname}`,
               verses: [
                 { paragraph: 1, number: 1, text: `text ${createdUser.firstname} text ${createdUser.firstname} text` },
                 { paragraph: 1, number: 2, text: "text ti text" },
