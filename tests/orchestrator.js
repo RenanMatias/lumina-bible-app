@@ -78,7 +78,7 @@ async function seedScriptureDb() {
       INSERT INTO 
         scripture_pericopes(chapter_id, title)
       VALUES
-        ($1, 'Title Pericope')
+        ($1, 'Title {{name|Pericope}}')
       RETURNING
         *
       ;`,
