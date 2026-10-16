@@ -1,14 +1,12 @@
 import "@primer/primitives/dist/css/functional/themes/light.css";
+import "../styles/globals.css";
 
-import { ThemeProvider, BaseStyles } from "@primer/react";
+import { BaseStyles } from "@primer/react";
 
 export default function App({ Component, pageProps }) {
   return (
-    <ThemeProvider>
-      <BaseStyles>
-        <div data-astro-cid-j7pv25f6=""></div>
-        <Component {...pageProps} />
-      </BaseStyles>
-    </ThemeProvider>
+    <BaseStyles>
+      <Component {...pageProps} />
+    </BaseStyles>
   );
 }
