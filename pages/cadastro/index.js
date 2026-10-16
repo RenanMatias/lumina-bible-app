@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, FormControl, TextInput, Stack, Heading } from "@primer/react";
 import DefaultLayout from "../../interface/DefaultLayout/index.js";
+import { useRouter } from "next/router";
 
 export default function RegisterPage() {
   return (
@@ -20,6 +21,7 @@ export default function RegisterPage() {
 }
 
 function RegisterForm() {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +40,7 @@ function RegisterForm() {
     });
 
     if (response.status === 201) {
-      location.href = "/cadastro/confirmar";
+      router.push("/cadastro/confirmar");
     }
   }
 
