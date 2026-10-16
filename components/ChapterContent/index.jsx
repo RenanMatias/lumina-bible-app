@@ -1,7 +1,7 @@
 import React from "react";
 import { Breadcrumbs, Stack, Heading, Text, Pagination } from "@primer/react";
 import { SkeletonText } from "@primer/react/experimental";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import styles from "./styles.module.css";
 import { ChevronLeftIcon, ChevronRightIcon } from "@primer/octicons-react";
@@ -64,6 +64,7 @@ function sanitizeVerseHtml(rawText) {
 }
 
 export default function ChapterContent({ chapter }) {
+  const router = useRouter();
   const testamentName = chapter?.book.testament;
   const testamentSlug =
     testamentName === "Novo Testamento"
@@ -95,7 +96,7 @@ export default function ChapterContent({ chapter }) {
   const handlePageChange = (event, page) => {
     const selectedChapter = chapter?.book.chapters.find((c) => c.number === page);
     if (selectedChapter) {
-      redirect(`/biblia/livro/${bookId}/${selectedChapter.id}`);
+      router.push(`/biblia/livro/${bookId}/${selectedChapter.id}`);
     }
   };
 
