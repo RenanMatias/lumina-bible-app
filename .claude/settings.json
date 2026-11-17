@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm audit)",
+      "Bash(npx next build)",
+      "Bash(npm run dev)",
+      "Bash(npm run services:up)",
+      "Bash(npm run services:stop)",
+      "Bash(npm run services:wait:database)",
+      "Bash(npm run migrations:up)",
+      "Bash(npm run lint:prettier:check)",
+      "Bash(npm run lint:eslint:check)",
+      "Bash(npx prettier --check .)",
+      "Bash(docker info)",
+      "Bash(npm test)"
+    ]
+  }
+}
