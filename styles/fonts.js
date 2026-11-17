@@ -11,5 +11,7 @@ export const literata = Literata({
 export const inter = Inter({
   subsets: ["latin"],
   display: "swap",
+  // Ainda não usada em nenhum estilo: não pré-carregar evita baixar a fonte em toda página.
+  preload: false,
   variable: "--font-inter",
 });

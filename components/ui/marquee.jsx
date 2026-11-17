@@ -6,7 +6,7 @@ export function Marquee({
   pauseOnHover = false,
   children,
   vertical = false,
-  repeat = 4,
+  repeat = 2,
   style = {},
   ...props
 }) {
@@ -40,16 +40,15 @@ export function Marquee({
       {Array(repeat)
         .fill(0)
         .map((_, i) => (
-          <div key={i} style={itemStyle} className={`marquee-content ${pauseOnHover ? "pause-on-hover" : ""}`}>
+          <div
+            key={i}
+            style={itemStyle}
+            className={`marquee-content ${pauseOnHover ? "pause-on-hover" : ""}`}
+            aria-hidden={i > 0 ? true : undefined}
+          >
             {children}
           </div>
         ))}
-
-      <style>{`
-        .marquee-group:hover .pause-on-hover {
-          animation-play-state: paused;
-        }
-      `}</style>
     </div>
   );
 }

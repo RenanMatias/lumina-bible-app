@@ -104,3 +104,26 @@
     transform: rotate(-5deg) scale(0.9);
   }
 }
+
+@keyframes aurora-text-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.marquee-group:hover .pause-on-hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-content,
+  .aurora-text {
+    animation-play-state: paused;
+  }
+}
